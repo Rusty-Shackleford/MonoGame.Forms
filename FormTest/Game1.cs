@@ -1,6 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended.BitmapFonts;
+using MonoGame.Forms;
+using MonoGame.Forms.Controls;
+using MonoGame.Forms.Controls.Styles;
 
 namespace FormTest
 {
@@ -11,6 +15,7 @@ namespace FormTest
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        ControlManager manager;
 
         public Game1()
         {
@@ -41,6 +46,16 @@ namespace FormTest
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
+            manager = new ControlManager(GraphicsDevice);
+            BitmapFont font = Content.Load<BitmapFont>("Fonts/Consolas");
+            FontStyle fontStyle = new FontStyle(font, Color.Red);
+            manager.DefaultFontStyle = fontStyle;
+            Label labelTest = new Label("TESTING", fontStyle);
+            labelTest.Position = new Vector2(200, 200);
+
+            manager.AddControl(labelTest);
+
         }
 
         /// <summary>
@@ -50,6 +65,7 @@ namespace FormTest
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+
         }
 
         /// <summary>
@@ -62,7 +78,8 @@ namespace FormTest
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            // UPDATE CONTROL MANAGER
+            manager.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -75,7 +92,8 @@ namespace FormTest
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            // DRAW CONTROL MANAGER
+            manager.Draw(gameTime);
 
             base.Draw(gameTime);
         }

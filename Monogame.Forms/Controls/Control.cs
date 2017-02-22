@@ -6,11 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using MonoGame.Forms.Controls.Styles;
 
-namespace Monogame.Forms.Controls
+namespace MonoGame.Forms.Controls
 {
     public abstract class Control
     {
+
+        protected Control()
+        {
+            Visible = true;
+            Enabled = true;
+        } 
 
         #region [ Members ]
         public bool Visible { get; set; }
@@ -169,7 +176,7 @@ namespace Monogame.Forms.Controls
 
 
         #region [ Update ]
-        public virtual void Update(float deltaTime) { }
+        public virtual void Update(GameTime gameTime) { }
         #endregion
 
 

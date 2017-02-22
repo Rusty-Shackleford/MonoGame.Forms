@@ -7,8 +7,8 @@
     <ProjectGuid>{0B31A7B5-06CE-4037-8C66-C616FB58107B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Monogame.Forms</RootNamespace>
-    <AssemblyName>Monogame.Forms</AssemblyName>
+    <RootNamespace>MonoGame.Forms</RootNamespace>
+    <AssemblyName>MonoGame.Forms</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -46,13 +46,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="ControlManager.cs" />
+    <Compile Include="ControlSet.cs" />
     <Compile Include="Controls\Control.cs" />
+    <Compile Include="Controls\IDisplayText.cs" />
+    <Compile Include="Controls\Label.cs" />
+    <Compile Include="Controls\Renderers\FontRenderer.cs" />
+    <Compile Include="Controls\Renderers\IRenderer.cs" />
+    <Compile Include="Controls\Styles\ControlStyle.cs" />
+    <Compile Include="Controls\Styles\IStyle.cs" />
+    <Compile Include="Controls\Styles\FontStyle.cs" />
+    <Compile Include="IRender.cs" />
     <Compile Include="PositionChangedArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
