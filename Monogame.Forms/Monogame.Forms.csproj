@@ -48,9 +48,12 @@
     <Compile Include="Class1.cs" />
     <Compile Include="ControlManager.cs" />
     <Compile Include="ControlSet.cs" />
+    <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\Control.cs" />
+    <Compile Include="Controls\ControlState.cs" />
     <Compile Include="Controls\IDisplayText.cs" />
     <Compile Include="Controls\Label.cs" />
+    <Compile Include="Controls\Renderers\ControlRenderer.cs" />
     <Compile Include="Controls\Renderers\FontRenderer.cs" />
     <Compile Include="Controls\Renderers\IRenderer.cs" />
     <Compile Include="Controls\Styles\ControlStyle.cs" />

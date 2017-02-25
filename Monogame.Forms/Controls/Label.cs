@@ -9,8 +9,8 @@ namespace MonoGame.Forms.Controls
     public class Label : Control, IDisplayText
     {
         #region [ Constructor ]
-        public Label(FontStyle style) : this("", style) { }
-        public Label(string text, FontStyle style) : base()
+        public Label(ControlStyle style) : this("", style) { }
+        public Label(string text, ControlStyle style) : base()
         {
             if (style == null)
             {
@@ -37,7 +37,6 @@ namespace MonoGame.Forms.Controls
             }
         }
 
-        public FontStyle Style { get; set; }
         private FontRenderer _render;
         #endregion
 

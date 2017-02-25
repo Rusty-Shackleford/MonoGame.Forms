@@ -16,7 +16,7 @@ namespace MonoGame.Forms.Controls.Renderers
 
 
         #region [ Members ]
-        FontStyle style;
+        ControlStyle style;
         IDisplayText owner;
         #endregion
 
@@ -24,7 +24,7 @@ namespace MonoGame.Forms.Controls.Renderers
         #region [ Render ]
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(owner.Style.Font, owner.Text, owner.Position, owner.Style.FontColor);
+            spriteBatch.DrawString(style.Font, owner.Text, owner.Position, style.Color);
         }
         #endregion
     }

@@ -20,10 +20,12 @@ namespace MonoGame.Forms.Controls
         } 
 
         #region [ Members ]
+        
+        public virtual ControlStyle Style { get; set; }
         public bool Visible { get; set; }
         public bool Enabled { get; set; }
         public bool Pressed { get; protected set; }
-        public bool UnderMouse { get; protected set; }
+        public bool Hovered { get; protected set; }
 
         private bool _hasFocus;
         public bool HasFocus
@@ -45,6 +47,31 @@ namespace MonoGame.Forms.Controls
                 }
             }
         }
+
+        public ControlState State
+        {
+            get
+            {
+                if (!Enabled)
+                {
+                    return ControlState.Disabled;
+                }
+                if (Hovered)
+                {
+                    if (Pressed)
+                    {
+                        return ControlState.Pressed;
+                    }
+                    return ControlState.Hovered;
+                }
+                if (HasFocus)
+                {
+                    return ControlState.Activated;
+                }
+                return ControlState.Default;
+            }
+        }
+
 
         private int _height;
         public int Height
@@ -127,11 +154,11 @@ namespace MonoGame.Forms.Controls
 
         public virtual void MouseOver(MouseEventArgs e)
         {
-            if (Enabled && !UnderMouse)
+            if (Enabled && !Hovered)
             {
                 if (Bounds.Contains(e.Position))
                 {
-                    UnderMouse = true;
+                    Hovered = true;
                     OnMouseOver?.Invoke(this, EventArgs.Empty);
                 }
             }
@@ -140,11 +167,11 @@ namespace MonoGame.Forms.Controls
 
         public virtual void MouseOut(MouseEventArgs e)
         {
-            if (Enabled && UnderMouse)
+            if (Enabled && Hovered)
             {
                 if (!Bounds.Contains(e.Position))
                 {
-                    UnderMouse = false;
+                    Hovered = false;
                     OnMouseOut?.Invoke(this, EventArgs.Empty);
                 }
             }
@@ -162,7 +189,7 @@ namespace MonoGame.Forms.Controls
 
         public virtual void Click(MouseEventArgs e)
         {
-            if (Enabled && UnderMouse)
+            if (Enabled && Hovered)
             {
                 Pressed = false;
                 OnClicked?.Invoke(this, EventArgs.Empty);

@@ -47,12 +47,30 @@ namespace FormTest
 
             // TODO: use this.Content to load your game content here
 
+            // Load button assets
+            Texture2D button = Content.Load<Texture2D>("Button");
+            Texture2D buttonHover = Content.Load<Texture2D>("ButtonHover");
+            Texture2D buttonPressed = Content.Load<Texture2D>("ButtonPressed");
+            ControlStyle ButtonStyle = new ControlStyle(
+                button, 
+                buttonHover, 
+                buttonPressed, 
+                null, 
+                new Rectangle(0, 0, 0, 0)
+                );
+
+            // Control Manager - updates / draws all controls
             manager = new ControlManager(GraphicsDevice);
             BitmapFont font = Content.Load<BitmapFont>("Fonts/Consolas");
             FontStyle fontStyle = new FontStyle(font, Color.Red);
             manager.DefaultFontStyle = fontStyle;
+
+            // Label:
             Label labelTest = new Label("TESTING", fontStyle);
             labelTest.Position = new Vector2(200, 200);
+
+            // Button:
+
 
             manager.AddControl(labelTest);
 
