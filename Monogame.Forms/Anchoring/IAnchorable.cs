@@ -11,7 +11,7 @@ namespace MonoGame.Forms.Anchoring
 
         Rectangle Bounds { get; }
 
-        //Rectangle VirtualBounds { get; }
+        Rectangle InteractiveBounds { get; }
 
         event EventHandler OnPositionChanged;
 

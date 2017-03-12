@@ -40,18 +40,6 @@ namespace MonoGame.Forms.Controls
         #endregion
 
 
-        #region [ Update ]
-        public override void Update(GameTime gameTime)
-        {
-            if (Label != null)
-            {
-                Label.Update(gameTime);
-            }
-            base.Update(gameTime);
-        }
-        #endregion
-
-
         #region [ Draw ]
         public override void Draw(SpriteBatch spriteBatch)
         {

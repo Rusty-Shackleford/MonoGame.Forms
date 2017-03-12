@@ -67,7 +67,7 @@ namespace MonoGame.Forms.Services
             get { return new Rectangle(0, 0, Width, Height); }
         }
 
-        public Rectangle VirtualBounds
+        public Rectangle InteractiveBounds
         {
             get { return Bounds; }
         }

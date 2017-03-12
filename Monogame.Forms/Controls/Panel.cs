@@ -16,11 +16,19 @@ namespace MonoGame.Forms.Controls
     {
 
         #region [ Constructor ]
-        public Panel(ControlStyle style): base()
+        public Panel(ControlStyle style) : this("", style) { }
+        public Panel(string title, ControlStyle style): base()
         {
+            EnableDragging = true;
             if (style == null)
             {
                 throw new NotSupportedException("A style must be provided for this panel.");
+            }
+            Style = style;
+            if (!string.IsNullOrEmpty(title))
+            {
+                _label = new Label(title, Style.FontStyle);
+                _label.AnchorTo(this, Anchoring.PositionType.Inside_Top_Left, 3, 8, Anchoring.AnchorType.Bounds);
             }
             _render = new ControlRenderer(this);
         }
@@ -28,81 +36,26 @@ namespace MonoGame.Forms.Controls
 
 
         #region [ Members ]
-        public bool Dragging { get; private set; }
         private GameViewport _window = ServiceProvider.GetService<GameViewport>();
 
-        private Vector2 _originalPosition;
-        public Vector2 OriginalPosition
-        {
-            get { return _originalPosition; }
-            private set { _originalPosition = value; }
-        }
+
         private ControlRenderer _render;
+
+        private Label _label;
+
         #endregion
 
 
-
-
-        #region [ Drag ]
-        public void CancelDrag() { }
-
-        public void DragStart(MouseEventArgs e)
-        {
-            Dragging = true;
-            Move(e);
-        }
-
-        public void DragEnd(MouseEventArgs e)
-        {
-            Dragging = false;
-            Move(e);
-        }
-         
-        public void Drag(MouseEventArgs e)
-        {
-            Move(e);
-        }
-
-        public Vector2 Move(MouseEventArgs e)
-        {
-            var newPosition = Position + e.DistanceMoved;
-
-            if (newPosition.X + Width > _window.Width)
-            {
-                newPosition.X = _window.Width - Width;
-            }
-            if (newPosition.Y + Height > _window.Height)
-            {
-                newPosition.Y = _window.Height - Height;
-            }
-            if (Position.X < 0)
-            {
-                newPosition.X = 0;
-            }
-            if (Position.Y < 0)
-            {
-                newPosition.Y = 0;
-            }
-
-            Position = newPosition;
-            return Position;
-        }
-        #endregion
-
-
-
-        #region [ Update ]
-        public override void Update(GameTime gameTime)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
 
 
         #region [ Draw ]
         public override void Draw(SpriteBatch spriteBatch)
         {
-            throw new NotImplementedException();
+            _render.Draw(spriteBatch);
+            if (_label != null)
+            {
+                _label.Draw(spriteBatch);
+            }
         }
         #endregion
 

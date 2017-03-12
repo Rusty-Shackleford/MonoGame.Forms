@@ -7,6 +7,8 @@ using MonoGame.Forms;
 using MonoGame.Forms.Controls;
 using MonoGame.Forms.Controls.Styles;
 using MonoGame.Forms.Services;
+using MonoGame.Forms.Anchoring;
+using MonoGame.Extended;
 
 namespace FormTest
 {
@@ -15,13 +17,15 @@ namespace FormTest
     /// </summary>
     public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
+        public GraphicsDeviceManager Graphics;
         SpriteBatch spriteBatch;
         ControlManager manager;
+        public readonly int ScreenWidthStart = 1280;
+        public readonly int ScreenHeightStart = 720;
 
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
+            Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
@@ -33,9 +37,16 @@ namespace FormTest
         /// </summary>
         protected override void Initialize()
         {
-            ServiceProvider.Initialize(this);
-            // Service Provider
+            Graphics.PreferredBackBufferWidth = ScreenWidthStart;
+            Graphics.PreferredBackBufferHeight = ScreenHeightStart;
+            Graphics.ApplyChanges();
 
+            Window.IsBorderless = false;
+            Window.AllowUserResizing = false;   //TODO: Allow Window Resizing
+
+            // Service Provider
+            ServiceProvider.Initialize(this);
+            
             base.Initialize();
         }
 
@@ -50,34 +61,52 @@ namespace FormTest
             // Load Assets
             Assets.LoadContent(Content);
 
-            // Load button assets
-            ControlStyle ButtonStyle = new ControlStyle(
+            // A style for buttons to use.
+            ControlStyle buttonStyle = new ControlStyle(
                 Assets.Button,
                 Assets.ButtonHover,
                 Assets.ButtonPressed,
                 null,
                 Rectangle.Empty
                 );
+            buttonStyle.FontStyle = new FontStyle(Assets.Plumbis11, Color.White);
+
 
             // Control Manager - updates / draws all controls
             manager = new ControlManager(GraphicsDevice);
 
-            // Create a style for buttons and labels
-
-            ButtonStyle.FontStyle = new FontStyle(Assets.MineCraftia12);
-
 
             // Button:
-            Button btn = new Button("Test", ButtonStyle);
+            Button btn = new Button("DO NOT PUSH", buttonStyle);
             btn.OnClicked += btn_click;
             btn.Position = new Vector2(100, 100);
-            manager.AddControl(btn);
+            
 
-            // Label:
-            Label myLabel = new Label("Here is a longer string of text to evaluate.", ButtonStyle.FontStyle);
+            // Label:  will re-use the same FontStyle as buttons
+            Label myLabel = new Label("Here is a longer string of text to evaluate.", buttonStyle.FontStyle);
             myLabel.Position = new Vector2(200, 200);
             manager.AddControl(myLabel);
 
+
+            // Panel:
+            ControlStyle panelStyle = new ControlStyle(Assets.Terminal);
+            panelStyle.FontStyle = buttonStyle.FontStyle;
+            Panel myPanel = new Panel(panelStyle);
+            btn.AnchorTo(myPanel, PositionType.Inside_Top_Left, 10, 30, AnchorType.Bounds);
+            manager.AddControl(myPanel);
+            manager.AddControl(btn);
+
+            // FPS Counter:
+            ServiceProvider.AddService(new FramesPerSecondCounter(100));
+
+            // Dev Console
+            ControlStyle styleDevConsole = new ControlStyle(Assets.DevConsole);
+            styleDevConsole.FontStyle = buttonStyle.FontStyle;
+
+            var console = new DevConsole(GraphicsDevice, Keys.OemTilde, new Panel("DevConsole", styleDevConsole));
+            console.TextStartPosition = new Vector2(15, 20);
+
+            ServiceProvider.AddService(console);
 
             // Cursor - note this needs to be added last
             ServiceProvider.AddService(new MouseCursor(GraphicsDevice));
@@ -109,6 +138,11 @@ namespace FormTest
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            // Write FPS to console
+            string fps = ServiceProvider.GetService<FramesPerSecondCounter>().CurrentFramesPerSecond.ToString();
+            ServiceProvider.GetService<DevConsole>().Write("FPS:  " + fps);
+
             // Service Provider
             ServiceProvider.Update(gameTime);
 

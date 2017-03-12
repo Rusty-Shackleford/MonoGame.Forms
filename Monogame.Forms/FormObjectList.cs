@@ -8,25 +8,25 @@ using System.Threading.Tasks;
 
 namespace MonoGame.Forms
 {
-    public class ControlSet
+    public class FormObjectList
     {
-        public ControlSet()
+        public FormObjectList()
         {
-            _children = new List<Control>();
+            _children = new List<IFormObject>();
         }
 
 
-        private List<Control> _children;
+        private List<IFormObject> _children;
 
 
-        public IEnumerator<Control> GetEnumerator()
+        public IEnumerator<IFormObject> GetEnumerator()
         {
-            return ((IEnumerable<Control>)_children).GetEnumerator();
+            return ((IEnumerable<IFormObject>)_children).GetEnumerator();
         }
 
 
 
-        public Control this[int index]
+        public IFormObject this[int index]
         {
             get { return _children[index]; }
         }
@@ -36,39 +36,39 @@ namespace MonoGame.Forms
             get { return _children.Count; }
         }
 
-        public void AddControl(Control control)
+        public void AddControl(IFormObject control)
         {
             _children.Add(control);
         }
 
 
-        public void RemoveControl(Control control)
+        public void RemoveControl(IFormObject control)
         {
             _children.Remove(control);
         }
 
 
-        public Control GetControlAtPoint(Point point)
+        public IFormObject GetControlAtPoint(Point point)
         {
             return _children.LastOrDefault(e => e.InteractiveBounds.Contains(point));
         }
 
 
-        public List<Control> GetControlsAtPoint(Point point)
+        public List<IFormObject> GetControlsAtPoint(Point point)
         {
             return _children.FindAll(e => e.InteractiveBounds.Contains(point));
         }
 
 
-        private Control Find(Func<Control, Control, bool> compare)
+        private IFormObject Find(Func<IFormObject, IFormObject, bool> compare)
         {
             if (_children.Count == 0)
-                return default(Control);
+                return default(IFormObject);
 
             if (_children.Count == 1)
                 return _children[0];
 
-            Control found = _children[0];
+            IFormObject found = _children[0];
             for (int i = 1; i < _children.Count; i++)
             {
                 if (compare(_children[i], found))
@@ -80,25 +80,25 @@ namespace MonoGame.Forms
         }
 
 
-        public Control RightmostControl()
+        public IFormObject RightmostControl()
         {
             return Find((a, b) => a.Bounds.Right > b.Bounds.Right);
         }
 
 
-        public Control LeftmostControl()
+        public IFormObject LeftmostControl()
         {
             return Find((a, b) => a.Bounds.Left < b.Bounds.Left);
         }
 
 
-        public Control HighestControl()
+        public IFormObject HighestControl()
         {
             return Find((a, b) => a.Bounds.Top < b.Bounds.Top);
         }
 
 
-        public Control LowestControl()
+        public IFormObject LowestControl()
         {
             return Find((a, b) => a.Bounds.Bottom > b.Bounds.Bottom);
         }

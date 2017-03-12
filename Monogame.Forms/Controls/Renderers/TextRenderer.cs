@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Forms.Controls.Styles;
 using MonoGame.Extended.BitmapFonts;
+using Microsoft.Xna.Framework;
 
 namespace MonoGame.Forms.Controls.Renderers
 {
@@ -22,7 +23,8 @@ namespace MonoGame.Forms.Controls.Renderers
         #region [ Render ]
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(owner.FontStyle.Font, owner.Text, owner.Position, owner.FontStyle.Color);
+            Vector2 test = new Vector2((int)owner.Position.X, (int)owner.Position.Y);
+            spriteBatch.DrawString(owner.FontStyle.Font, owner.Text, test, owner.FontStyle.Color);
         }
         #endregion
     }

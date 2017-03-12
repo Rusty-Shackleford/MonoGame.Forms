@@ -8,7 +8,7 @@ using System;
 
 namespace MonoGame.Forms.Controls
 {
-    public abstract class Control : IAnchorable
+    public abstract class Control : IAnchorable, IFormObject, IInteractive, IDraggable
     {
         protected Control()
         {
@@ -43,6 +43,57 @@ namespace MonoGame.Forms.Controls
         }
         #endregion
 
+        #region [ Dragging ]
+        public bool EnableDragging { get; set; }
+
+        private Vector2 _originalPosition;
+        public Vector2 OriginalPosition
+        {
+            get { return _originalPosition; }
+            private set { _originalPosition = value; }
+        }
+
+        public void CancelDrag() { }
+
+        public void DragStart(MouseEventArgs e)
+        {
+            if (EnableDragging)
+            {
+                Dragging = true;
+                Move(e);
+            }
+        }
+
+
+        public void DragEnd(MouseEventArgs e)
+        {
+            if (EnableDragging)
+            {
+                Dragging = false;
+                Move(e);
+            }
+        }
+
+
+        public void Drag(MouseEventArgs e)
+        {
+            if (EnableDragging)
+            {
+                Move(e);
+            }
+        }
+
+        public virtual Vector2 Move(MouseEventArgs e)
+        {
+            Position += e.DistanceMoved;
+            return Position;
+        }
+        public virtual Vector2 Move(Vector2 distance)
+        {
+            Position += distance;
+            return Position;
+        }
+        #endregion
 
         private ControlStyle _style;
         public virtual ControlStyle Style
@@ -63,6 +114,8 @@ namespace MonoGame.Forms.Controls
         public bool Enabled { get; set; }
         public bool Pressed { get; protected set; }
         public bool Hovered { get; protected set; }
+        public bool Dragging { get; protected set; }
+
 
         private bool _hasFocus;
         public bool HasFocus
@@ -255,9 +308,8 @@ namespace MonoGame.Forms.Controls
         public virtual void Update(GameTime gameTime) { }
         #endregion
 
-
         #region [ Draw ]
-        public abstract void Draw(SpriteBatch spriteBatch);
+        public virtual void Draw(SpriteBatch spriteBatch) { }
         #endregion
     }
 }

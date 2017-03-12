@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
@@ -17,25 +18,30 @@ namespace MonoGame.Forms
         #region [ Constructor ]
         public ControlManager(GraphicsDevice gd)
         {
-            controls = new ControlSet();
+            controls = new FormObjectList();
             sb = new SpriteBatch(gd);
 
             mouse.MouseMoved += Hover;
             mouse.MouseDown += Press;
             mouse.MouseUp += Click;
+
+            mouse.MouseDragStart += moveCheck;
+            mouse.MouseDrag += move;
+            mouse.MouseDragEnd += moveEnd;
         }
         #endregion
 
 
         #region [ Members ]
-        private ControlSet controls;
+        private FormObjectList controls;
         public FontStyle DefaultFontStyle { get; set; }
         public ControlStyle DefaultControlStyle { get; set; }
         private SpriteBatch sb;
 
         private readonly MouseListener mouse = ServiceProvider.GetService<MouseListener>();
-        private Control hoveredControl { get; set; }
-        private Control pressedControl { get; set; }
+        private IInteractive hoveredControl { get; set; }
+        private IInteractive pressedControl { get; set; }
+        private IDraggable movingControl { get; set; }
 
         #endregion
 
@@ -52,23 +58,61 @@ namespace MonoGame.Forms
         }
         #endregion
 
+        #region [ Movement ]
+        private void moveEnd(object sender, MouseEventArgs e)
+        {
+            if (movingControl != null)
+            {
+                movingControl.DragEnd(e);
+                movingControl = null;
+            }
+        }
+
+        private void move(object sender, MouseEventArgs e)
+        {
+            if (movingControl != null)
+            {
+                movingControl.Drag(e);
+            }
+        }
+
+        private void moveCheck(object sender, MouseEventArgs e)
+        {
+            IFormObject c = controls.GetControlAtPoint(e.Position);
+            if (movingControl == null && c != null)
+            {
+                if (c is IDraggable)
+                {
+                    movingControl = (IDraggable)c;
+                    movingControl.DragStart(e);
+                }
+            }
+        }
+        #endregion
+
 
         #region [ Hover ]
         private void Hover(object sender, MouseEventArgs e)
         {
-            Control c = controls.GetControlAtPoint(e.Position);
-
+            IFormObject c = controls.GetControlAtPoint(e.Position);
+            if (c != null)
+            {
+                ServiceProvider.GetService<DevConsole>().Write("Have a thing");
+            }
             if (hoveredControl != null)
             {
-                if (hoveredControl != c)
+                if (hoveredControl != (IFormObject)c)
                 {
                     hoveredControl.MouseOut(e);
                 }
             }
             if (c != null)
             {
-                hoveredControl = c;
-                hoveredControl.MouseOver(e);
+                if (c is IInteractive)
+                {
+                    hoveredControl = (IInteractive)c;
+                    hoveredControl.MouseOver(e);
+                }
             }
         }
         #endregion
@@ -77,11 +121,14 @@ namespace MonoGame.Forms
         #region [ Press ]
         private void Press(object sender, MouseEventArgs e)
         {
-            Control c = controls.GetControlAtPoint(e.Position);
+            IFormObject c = controls.GetControlAtPoint(e.Position);
             if (c != null)
             {
-                pressedControl = c;
-                pressedControl.Press(e);
+                if (c is IInteractive)
+                {
+                    pressedControl = (IInteractive)c;
+                    pressedControl.Press(e);
+                }
             }
         }
         #endregion
@@ -90,7 +137,7 @@ namespace MonoGame.Forms
         #region [ Click ]
         private void Click(object sender, MouseEventArgs e)
         {
-            Control c = controls.GetControlAtPoint(e.Position);
+            IFormObject c = controls.GetControlAtPoint(e.Position);
 
             if (pressedControl != null)
             {

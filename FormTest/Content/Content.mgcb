@@ -250,3 +250,90 @@
 /processorParam:TextureFormat=Color
 /build:Fonts/MineCraftia_10_0.png
 
+#begin Fonts/SteelFlight_16.fnt
+/importer:BitmapFontImporter
+/processor:BitmapFontProcessor
+/build:Fonts/SteelFlight_16.fnt
+
+#begin Fonts/SteelFlight_16_0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Fonts/SteelFlight_16_0.png
+
+#begin Fonts/SteelFlight_8.fnt
+/importer:BitmapFontImporter
+/processor:BitmapFontProcessor
+/build:Fonts/SteelFlight_8.fnt
+
+#begin Fonts/SteelFlight_8_0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Fonts/SteelFlight_8_0.png
+
+#begin Fonts/Plumbis_0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Fonts/Plumbis_0.png
+
+#begin Fonts/Plumbis_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Fonts/Plumbis_1.png
+
+#begin Fonts/Plumbis_11.fnt
+/importer:BitmapFontImporter
+/processor:BitmapFontProcessor
+/build:Fonts/Plumbis_11.fnt
+
+#begin UI/Terminal.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/Terminal.png
+
+#begin UI/DevConsole.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/DevConsole.png
+

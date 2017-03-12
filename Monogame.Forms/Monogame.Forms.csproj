@@ -52,7 +52,7 @@
     <Compile Include="Anchoring\Enum_VerticalAlign.cs" />
     <Compile Include="BoxProperty.cs" />
     <Compile Include="ControlManager.cs" />
-    <Compile Include="ControlSet.cs" />
+    <Compile Include="FormObjectList.cs" />
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\Control.cs" />
     <Compile Include="Controls\ControlState.cs" />
@@ -63,13 +63,17 @@
     <Compile Include="Controls\Renderers\ControlRenderer.cs" />
     <Compile Include="Controls\Renderers\TextRenderer.cs" />
     <Compile Include="Controls\Renderers\IRenderer.cs" />
+    <Compile Include="Controls\ScrollBox.cs" />
     <Compile Include="Controls\Styles\ControlStyle.cs" />
     <Compile Include="Controls\Styles\IStyle.cs" />
     <Compile Include="Controls\Styles\FontStyle.cs" />
     <Compile Include="Anchoring\IAnchorable.cs" />
+    <Compile Include="IFormObject.cs" />
+    <Compile Include="IInteractive.cs" />
     <Compile Include="IRender.cs" />
     <Compile Include="Anchoring\PositionChangedArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DevConsole.cs" />
     <Compile Include="Services\GameViewport.cs" />
     <Compile Include="Services\MouseCursor.cs" />
     <Compile Include="Services\ServiceProvider.cs" />
