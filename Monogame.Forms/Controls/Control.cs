@@ -1,27 +1,64 @@
-﻿using System;
-using MonoGame.Extended.InputListeners;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+using MonoGame.Extended.InputListeners;
+using MonoGame.Forms.Anchoring;
 using MonoGame.Forms.Controls.Styles;
+using System;
+
 
 namespace MonoGame.Forms.Controls
 {
-    public abstract class Control
+    public abstract class Control : IAnchorable
     {
-
         protected Control()
         {
             Visible = true;
             Enabled = true;
-        } 
+        }
+
 
         #region [ Members ]
-        
-        public virtual ControlStyle Style { get; set; }
+
+        #region [ Anchoring ]
+        public event EventHandler OnPositionChanged;
+        private AnchorComponent _anchor;
+        public AnchorComponent Anchor
+        {
+            get { return _anchor; }
+        }
+
+
+        public void AnchorTo(IAnchorable target, PositionType style, int offsetX = 0, int offsetY = 0, AnchorType anchorType = AnchorType.Bounds)
+        {
+            RemoveAnchor();
+            _anchor = new AnchorComponent(target, this, anchorType, style, new MonoGame.Extended.Size(offsetX, offsetY));
+        }
+        public void RemoveAnchor()
+        {
+            if (_anchor != null)
+            {
+                _anchor.RemoveAnchor();
+                _anchor = null;
+            }
+        }
+        #endregion
+
+
+        private ControlStyle _style;
+        public virtual ControlStyle Style
+        {
+            get { return _style; }
+            set
+            {
+                if (value != null)
+                {
+                    _style = value;
+                    Width = Style.TextureDefault.Width;
+                    Height = Style.TextureDefault.Height;
+                }
+            }
+        }
+
         public bool Visible { get; set; }
         public bool Enabled { get; set; }
         public bool Pressed { get; protected set; }
@@ -73,8 +110,8 @@ namespace MonoGame.Forms.Controls
         }
 
 
-        private int _height;
-        public int Height
+        protected int _height;
+        public virtual int Height
         {
             get { return _height; }
             set
@@ -82,13 +119,13 @@ namespace MonoGame.Forms.Controls
                 if (value != _height)
                 {
                     _height = value;
-                    OnDimmensionChange?.Invoke(this, EventArgs.Empty);
+                    OnPositionChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
 
-        private int _width;
-        public int Width
+        protected int _width;
+        public virtual int Width
         {
             get { return _width; }
             set
@@ -96,12 +133,12 @@ namespace MonoGame.Forms.Controls
                 if (value != _width)
                 {
                     _width = value;
-                    OnDimmensionChange?.Invoke(this, EventArgs.Empty);
+                    OnPositionChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
 
-        public Rectangle Bounds
+        public virtual Rectangle Bounds
         {
             get
             {
@@ -120,9 +157,24 @@ namespace MonoGame.Forms.Controls
         /// be in the image,but should not count for clicks, hover, etc.  This would be a rectangle drawn within the
         /// Bounding Rectangle of the control.
         /// </summary>
-        public Rectangle AlphaBorderBounds
+        public Rectangle InteractiveBounds
         {
-            get { return new Rectangle(); }
+            get
+            {
+                if (Style != null)
+                {
+                    if (Style.InteractiveOffset != Rectangle.Empty)
+                    {
+                        return new Rectangle(
+                            (int)Position.X + Style.InteractiveOffset.X,
+                            (int)Position.Y + Style.InteractiveOffset.Y,
+                            Style.InteractiveOffset.Width,
+                            Style.InteractiveOffset.Height
+                        );
+                    }
+                }
+                return Bounds;
+            }
         }
 
         private Vector2 _position;
@@ -133,9 +185,8 @@ namespace MonoGame.Forms.Controls
             {
                 if (value != _position)
                 {
-                    var args = new PositionChangedArgs(_position, value, Bounds);
                     _position = value;
-                    OnPositionChanged?.Invoke(this, args);
+                    OnPositionChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
@@ -150,13 +201,11 @@ namespace MonoGame.Forms.Controls
         public event EventHandler OnMouseOver;
         public event EventHandler OnMouseOut;
 
-        public event EventHandler<PositionChangedArgs> OnPositionChanged;
-
         public virtual void MouseOver(MouseEventArgs e)
         {
             if (Enabled && !Hovered)
             {
-                if (Bounds.Contains(e.Position))
+                if (InteractiveBounds.Contains(e.Position))
                 {
                     Hovered = true;
                     OnMouseOver?.Invoke(this, EventArgs.Empty);
@@ -169,7 +218,7 @@ namespace MonoGame.Forms.Controls
         {
             if (Enabled && Hovered)
             {
-                if (!Bounds.Contains(e.Position))
+                if (!InteractiveBounds.Contains(e.Position))
                 {
                     Hovered = false;
                     OnMouseOut?.Invoke(this, EventArgs.Empty);

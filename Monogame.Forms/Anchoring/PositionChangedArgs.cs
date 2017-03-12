@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonoGame.Forms
+namespace MonoGame.Forms.Anchoring
 {
     public class PositionChangedArgs
     {

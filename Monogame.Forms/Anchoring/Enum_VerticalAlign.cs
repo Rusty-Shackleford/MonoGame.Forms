@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonoGame.Forms
+namespace MonoGame.Forms.Anchoring
 {
-    public class Class1
+    public enum VerticalAlign
     {
+        Top,
+        Middle,
+        Bottom
     }
 }

@@ -1,10 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Forms;
 using MonoGame.Forms.Controls;
 using MonoGame.Forms.Controls.Styles;
+using MonoGame.Forms.Services;
 
 namespace FormTest
 {
@@ -31,7 +33,8 @@ namespace FormTest
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            ServiceProvider.Initialize(this);
+            // Service Provider
 
             base.Initialize();
         }
@@ -42,38 +45,49 @@ namespace FormTest
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            // Load Assets
+            Assets.LoadContent(Content);
 
             // Load button assets
-            Texture2D button = Content.Load<Texture2D>("Button");
-            Texture2D buttonHover = Content.Load<Texture2D>("ButtonHover");
-            Texture2D buttonPressed = Content.Load<Texture2D>("ButtonPressed");
             ControlStyle ButtonStyle = new ControlStyle(
-                button, 
-                buttonHover, 
-                buttonPressed, 
-                null, 
-                new Rectangle(0, 0, 0, 0)
+                Assets.Button,
+                Assets.ButtonHover,
+                Assets.ButtonPressed,
+                null,
+                Rectangle.Empty
                 );
 
             // Control Manager - updates / draws all controls
             manager = new ControlManager(GraphicsDevice);
-            BitmapFont font = Content.Load<BitmapFont>("Fonts/Consolas");
-            FontStyle fontStyle = new FontStyle(font, Color.Red);
-            manager.DefaultFontStyle = fontStyle;
 
-            // Label:
-            Label labelTest = new Label("TESTING", fontStyle);
-            labelTest.Position = new Vector2(200, 200);
+            // Create a style for buttons and labels
+
+            ButtonStyle.FontStyle = new FontStyle(Assets.MineCraftia12);
+
 
             // Button:
+            Button btn = new Button("Test", ButtonStyle);
+            btn.OnClicked += btn_click;
+            btn.Position = new Vector2(100, 100);
+            manager.AddControl(btn);
+
+            // Label:
+            Label myLabel = new Label("Here is a longer string of text to evaluate.", ButtonStyle.FontStyle);
+            myLabel.Position = new Vector2(200, 200);
+            manager.AddControl(myLabel);
 
 
-            manager.AddControl(labelTest);
+            // Cursor - note this needs to be added last
+            ServiceProvider.AddService(new MouseCursor(GraphicsDevice));
+            ServiceProvider.GetService<MouseCursor>().SetCursor(Assets.Cursor);
 
+        }
+
+        private void btn_click(object sender, EventArgs e)
+        {
+            Console.WriteLine("click");
         }
 
         /// <summary>
@@ -95,6 +109,8 @@ namespace FormTest
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            // Service Provider
+            ServiceProvider.Update(gameTime);
 
             // UPDATE CONTROL MANAGER
             manager.Update(gameTime);
@@ -102,18 +118,25 @@ namespace FormTest
             base.Update(gameTime);
         }
 
+
+        #region [ Draw ]
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(new Color(30,30,30));
 
             // DRAW CONTROL MANAGER
             manager.Draw(gameTime);
 
+            // Service Provider:  Last so that mouse on top:
+            ServiceProvider.Draw(gameTime);
+
             base.Draw(gameTime);
         }
+        #endregion
+
     }
 }

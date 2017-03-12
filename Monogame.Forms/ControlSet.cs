@@ -50,13 +50,13 @@ namespace MonoGame.Forms
 
         public Control GetControlAtPoint(Point point)
         {
-            return _children.LastOrDefault(e => e.Bounds.Contains(point));
+            return _children.LastOrDefault(e => e.InteractiveBounds.Contains(point));
         }
 
 
         public List<Control> GetControlsAtPoint(Point point)
         {
-            return _children.FindAll(e => e.Bounds.Contains(point));
+            return _children.FindAll(e => e.InteractiveBounds.Contains(point));
         }
 
 

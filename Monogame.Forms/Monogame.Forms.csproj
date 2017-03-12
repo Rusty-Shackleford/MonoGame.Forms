@@ -45,23 +45,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Anchoring\AnchorComponent.cs" />
+    <Compile Include="Anchoring\Anchoring.cs" />
+    <Compile Include="Anchoring\Enum_AnchorType.cs" />
+    <Compile Include="Anchoring\Enum_PositionType.cs" />
+    <Compile Include="Anchoring\Enum_VerticalAlign.cs" />
+    <Compile Include="BoxProperty.cs" />
     <Compile Include="ControlManager.cs" />
     <Compile Include="ControlSet.cs" />
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\Control.cs" />
     <Compile Include="Controls\ControlState.cs" />
     <Compile Include="Controls\IDisplayText.cs" />
+    <Compile Include="Controls\IDraggable.cs" />
     <Compile Include="Controls\Label.cs" />
+    <Compile Include="Controls\Panel.cs" />
     <Compile Include="Controls\Renderers\ControlRenderer.cs" />
-    <Compile Include="Controls\Renderers\FontRenderer.cs" />
+    <Compile Include="Controls\Renderers\TextRenderer.cs" />
     <Compile Include="Controls\Renderers\IRenderer.cs" />
     <Compile Include="Controls\Styles\ControlStyle.cs" />
     <Compile Include="Controls\Styles\IStyle.cs" />
     <Compile Include="Controls\Styles\FontStyle.cs" />
+    <Compile Include="Anchoring\IAnchorable.cs" />
     <Compile Include="IRender.cs" />
-    <Compile Include="PositionChangedArgs.cs" />
+    <Compile Include="Anchoring\PositionChangedArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\GameViewport.cs" />
+    <Compile Include="Services\MouseCursor.cs" />
+    <Compile Include="Services\ServiceProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

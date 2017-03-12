@@ -8,12 +8,17 @@ using System.Threading.Tasks;
 
 namespace MonoGame.Forms.Controls.Renderers
 {
-    public class ControlRenderer : IRenderer
+    public class ControlRenderer : IRender
     {
         #region [ Constructor ]
         public ControlRenderer(Control control)
         {
             owner = control;
+            if (owner.Style == null)
+            {
+                throw new NotSupportedException("This control is missing a style.");
+            }
+            style = owner.Style;
         }
         #endregion
 

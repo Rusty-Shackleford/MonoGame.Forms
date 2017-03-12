@@ -37,7 +37,7 @@ namespace MonoGame.Forms.Controls.Styles
             TextureHovered = textureHovered;
             TexturePressed = texturePushed;
             TextureDisabled = textureInactive;
-            ClickAreaOffset = clickAreaOffset;
+            InteractiveOffset = clickAreaOffset;
             Color = Color.White;
         }
         #endregion
@@ -67,7 +67,12 @@ namespace MonoGame.Forms.Controls.Styles
         /// the "clickable" area of the control should be.  To account for
         /// drop-shadow transparency and other edge effects.
         /// </summary>
-        public Rectangle ClickAreaOffset { get; set; }
+        public Rectangle InteractiveOffset { get; set; }
+
+        /// <summary>
+        /// Offset of where to place the label for this control.
+        /// </summary>
+        public Rectangle LabelOffset { get; set; }
 
         /// <summary>
         /// When a texture has active focus, like a textbox
@@ -77,8 +82,8 @@ namespace MonoGame.Forms.Controls.Styles
 
         public Color Color { get; set; }
 
-        public BitmapFont Font { get; set; }
-        public SpriteFont SFont { get; set; }
+        public FontStyle FontStyle { get; set; }
+
         #endregion
     }
 }

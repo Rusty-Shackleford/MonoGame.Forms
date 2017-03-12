@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MonoGame.Forms.Controls.Renderers
 {
-    public interface IRenderer
+    public interface IRender
     {
         // NOTE: at the moment this is the same as IRender
         void Draw(SpriteBatch spriteBatch);

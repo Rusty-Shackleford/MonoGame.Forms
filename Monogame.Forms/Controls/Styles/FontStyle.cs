@@ -20,12 +20,12 @@ namespace MonoGame.Forms.Controls.Styles
         public FontStyle(BitmapFont font, Color color)
         {
             Font = font;
-            FontColor = color;
+            Color = color;
         }
         public FontStyle(SpriteFont font, Color color)
         {
             SFont = font;
-            FontColor = color;
+            Color = color;
         }
         public FontStyle(SpriteFont font) : this(font, Color.White) { }
         public FontStyle(BitmapFont font) : this(font, Color.White) { }
@@ -46,7 +46,7 @@ namespace MonoGame.Forms.Controls.Styles
         /// <summary>
         /// The Color used to render the label text;
         /// </summary>
-        public Color FontColor { get; set; }
+        public Color Color { get; set; }
         #endregion
     }
 }

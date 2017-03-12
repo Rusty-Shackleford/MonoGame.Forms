@@ -11,7 +11,7 @@ namespace MonoGame.Forms.Controls
     public interface IDisplayText
     {
         Vector2 Position { get; }
-        ControlStyle Style { get; set; }
+        FontStyle FontStyle { get; set; }
         string Text { get; set; }
     }
 }
