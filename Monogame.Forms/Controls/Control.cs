@@ -8,7 +8,7 @@ using System;
 
 namespace MonoGame.Forms.Controls
 {
-    public abstract class Control : IAnchorable, IFormObject, IInteractive, IDraggable
+    public abstract class Control : IAnchorable, IContainable, IInteractive, IDraggable
     {
         protected Control()
         {

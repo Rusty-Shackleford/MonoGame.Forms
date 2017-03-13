@@ -85,7 +85,7 @@ namespace FormTest
             // Label:  will re-use the same FontStyle as buttons
             Label myLabel = new Label("Here is a longer string of text to evaluate.", buttonStyle.FontStyle);
             myLabel.Position = new Vector2(200, 200);
-            manager.AddControl(myLabel);
+            manager.Add(myLabel);
 
 
             // Panel:
@@ -93,8 +93,8 @@ namespace FormTest
             panelStyle.FontStyle = buttonStyle.FontStyle;
             Panel myPanel = new Panel(panelStyle);
             btn.AnchorTo(myPanel, PositionType.Inside_Top_Left, 10, 30, AnchorType.Bounds);
-            manager.AddControl(myPanel);
-            manager.AddControl(btn);
+            manager.Add(myPanel);
+            manager.Add(btn);
 
             // FPS Counter:
             ServiceProvider.AddService(new FramesPerSecondCounter(100));

@@ -18,7 +18,7 @@ namespace MonoGame.Forms
         #region [ Constructor ]
         public ControlManager(GraphicsDevice gd)
         {
-            controls = new FormObjectList();
+            controls = new Contents();
             sb = new SpriteBatch(gd);
 
             mouse.MouseMoved += Hover;
@@ -33,7 +33,7 @@ namespace MonoGame.Forms
 
 
         #region [ Members ]
-        private FormObjectList controls;
+        private Contents controls;
         public FontStyle DefaultFontStyle { get; set; }
         public ControlStyle DefaultControlStyle { get; set; }
         private SpriteBatch sb;
@@ -47,16 +47,17 @@ namespace MonoGame.Forms
 
 
         #region [ Add / Remove Controls ]
-        public void AddControl(Control control)
+        public void Add(Control control)
         {
             //TODO: positioning
             // for right now I'm just going to pass this through for testing
             if (control != null)
             {
-                controls.AddControl(control);
+                controls.Add(control);
             }
         }
         #endregion
+
 
         #region [ Movement ]
         private void moveEnd(object sender, MouseEventArgs e)
@@ -78,7 +79,7 @@ namespace MonoGame.Forms
 
         private void moveCheck(object sender, MouseEventArgs e)
         {
-            IFormObject c = controls.GetControlAtPoint(e.Position);
+            IContainable c = controls.GetControlAtPoint(e.Position);
             if (movingControl == null && c != null)
             {
                 if (c is IDraggable)
@@ -94,14 +95,14 @@ namespace MonoGame.Forms
         #region [ Hover ]
         private void Hover(object sender, MouseEventArgs e)
         {
-            IFormObject c = controls.GetControlAtPoint(e.Position);
+            IContainable c = controls.GetControlAtPoint(e.Position);
             if (c != null)
             {
                 ServiceProvider.GetService<DevConsole>().Write("Have a thing");
             }
             if (hoveredControl != null)
             {
-                if (hoveredControl != (IFormObject)c)
+                if (hoveredControl != (IContainable)c)
                 {
                     hoveredControl.MouseOut(e);
                 }
@@ -121,7 +122,7 @@ namespace MonoGame.Forms
         #region [ Press ]
         private void Press(object sender, MouseEventArgs e)
         {
-            IFormObject c = controls.GetControlAtPoint(e.Position);
+            IContainable c = controls.GetControlAtPoint(e.Position);
             if (c != null)
             {
                 if (c is IInteractive)
@@ -137,7 +138,7 @@ namespace MonoGame.Forms
         #region [ Click ]
         private void Click(object sender, MouseEventArgs e)
         {
-            IFormObject c = controls.GetControlAtPoint(e.Position);
+            IContainable c = controls.GetControlAtPoint(e.Position);
 
             if (pressedControl != null)
             {

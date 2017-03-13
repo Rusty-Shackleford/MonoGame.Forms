@@ -52,7 +52,7 @@
     <Compile Include="Anchoring\Enum_VerticalAlign.cs" />
     <Compile Include="BoxProperty.cs" />
     <Compile Include="ControlManager.cs" />
-    <Compile Include="FormObjectList.cs" />
+    <Compile Include="Contents.cs" />
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\Control.cs" />
     <Compile Include="Controls\ControlState.cs" />
@@ -68,7 +68,7 @@
     <Compile Include="Controls\Styles\IStyle.cs" />
     <Compile Include="Controls\Styles\FontStyle.cs" />
     <Compile Include="Anchoring\IAnchorable.cs" />
-    <Compile Include="IFormObject.cs" />
+    <Compile Include="IContainable.cs" />
     <Compile Include="IInteractive.cs" />
     <Compile Include="IRender.cs" />
     <Compile Include="Anchoring\PositionChangedArgs.cs" />
