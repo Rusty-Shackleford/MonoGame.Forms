@@ -7,7 +7,6 @@ namespace MonoGame.Forms
 {
     public interface IContainable : IAnchorable
     {
-        ControlStyle Style { get; }
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
     }

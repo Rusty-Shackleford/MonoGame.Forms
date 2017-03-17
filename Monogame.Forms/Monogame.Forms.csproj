@@ -51,24 +51,32 @@
     <Compile Include="Anchoring\Enum_PositionType.cs" />
     <Compile Include="Anchoring\Enum_VerticalAlign.cs" />
     <Compile Include="BoxProperty.cs" />
-    <Compile Include="ControlManager.cs" />
+    <Compile Include="ContentManager.cs" />
     <Compile Include="Contents.cs" />
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\Control.cs" />
     <Compile Include="Controls\ControlState.cs" />
-    <Compile Include="Controls\IDisplayText.cs" />
-    <Compile Include="Controls\IDraggable.cs" />
+    <Compile Include="Controls\DropDown.cs" />
+    <Compile Include="Controls\DropDownItems.cs" />
+    <Compile Include="IDisplayText.cs" />
+    <Compile Include="IDraggable.cs" />
     <Compile Include="Controls\Label.cs" />
     <Compile Include="Controls\Panel.cs" />
     <Compile Include="Controls\Renderers\ControlRenderer.cs" />
+    <Compile Include="Controls\Renderers\DropDownRenderer.cs" />
     <Compile Include="Controls\Renderers\TextRenderer.cs" />
     <Compile Include="Controls\Renderers\IRenderer.cs" />
     <Compile Include="Controls\ScrollBox.cs" />
+    <Compile Include="Controls\Scroller\ScrollBar.cs" />
+    <Compile Include="Controls\Scroller\Scroller.cs" />
+    <Compile Include="Controls\Scroller\ScrollThumb.cs" />
     <Compile Include="Controls\Styles\ControlStyle.cs" />
     <Compile Include="Controls\Styles\IStyle.cs" />
     <Compile Include="Controls\Styles\FontStyle.cs" />
     <Compile Include="Anchoring\IAnchorable.cs" />
+    <Compile Include="Controls\Styles\ScrollerStyle.cs" />
     <Compile Include="IContainable.cs" />
+    <Compile Include="IContainer.cs" />
     <Compile Include="IInteractive.cs" />
     <Compile Include="IRender.cs" />
     <Compile Include="Anchoring\PositionChangedArgs.cs" />
@@ -77,6 +85,7 @@
     <Compile Include="Services\GameViewport.cs" />
     <Compile Include="Services\MouseCursor.cs" />
     <Compile Include="Services\ServiceProvider.cs" />
+    <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

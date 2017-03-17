@@ -45,6 +45,20 @@ namespace MonoGame.Forms.Controls
 
         #region [ Dragging ]
         public bool EnableDragging { get; set; }
+        public Rectangle DragAreaOffset { get; set; }
+
+        public Rectangle DragBounds
+        {
+            get
+            {
+                return new Rectangle(
+                    (int)(Position.X + DragAreaOffset.X),
+                    (int)(Position.X + DragAreaOffset.Y),
+                    DragAreaOffset.Width,
+                    DragAreaOffset.Height
+                    );
+            }
+        }
 
         private Vector2 _originalPosition;
         public Vector2 OriginalPosition
@@ -204,13 +218,14 @@ namespace MonoGame.Forms.Controls
             }
         }
 
-        //TODO: Implement Alpha
+
         /// <summary>
         /// Some controls may use images that contain a drop-shadow, or other effects near the edges which will
         /// be in the image,but should not count for clicks, hover, etc.  This would be a rectangle drawn within the
         /// Bounding Rectangle of the control.
+        /// Altneratively, some controls contain more space than they appear, such as drop downs
         /// </summary>
-        public Rectangle InteractiveBounds
+        public Rectangle EffectiveBounds
         {
             get
             {
@@ -258,7 +273,7 @@ namespace MonoGame.Forms.Controls
         {
             if (Enabled && !Hovered)
             {
-                if (InteractiveBounds.Contains(e.Position))
+                if (EffectiveBounds.Contains(e.Position))
                 {
                     Hovered = true;
                     OnMouseOver?.Invoke(this, EventArgs.Empty);
@@ -271,7 +286,7 @@ namespace MonoGame.Forms.Controls
         {
             if (Enabled && Hovered)
             {
-                if (!InteractiveBounds.Contains(e.Position))
+                if (!EffectiveBounds.Contains(e.Position))
                 {
                     Hovered = false;
                     OnMouseOut?.Invoke(this, EventArgs.Empty);
@@ -285,6 +300,7 @@ namespace MonoGame.Forms.Controls
             if (Enabled)
             {
                 Pressed = true;
+                HasFocus = true;
             }
         }
 
@@ -304,12 +320,9 @@ namespace MonoGame.Forms.Controls
         #endregion
 
 
-        #region [ Update ]
+        #region [ Virtual - Update / Draw ]
         public virtual void Update(GameTime gameTime) { }
-        #endregion
-
-        #region [ Draw ]
-        public virtual void Draw(SpriteBatch spriteBatch) { }
+        public abstract void Draw(SpriteBatch spriteBatch);
         #endregion
     }
 }

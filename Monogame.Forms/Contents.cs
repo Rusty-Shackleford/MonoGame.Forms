@@ -53,19 +53,19 @@ namespace MonoGame.Forms
 
 
         #region [ Queries ]
-        public IContainable GetControlAtPoint(Point point)
+        public IContainable GetItemAtPoint(Point point)
         {
-            return _contents.LastOrDefault(e => e.InteractiveBounds.Contains(point));
+            return _contents.LastOrDefault(e => e.EffectiveBounds.Contains(point));
         }
 
 
-        public List<IContainable> GetControlsAtPoint(Point point)
+        public List<IContainable> GetItemsAtPoint(Point point)
         {
-            return _contents.FindAll(e => e.InteractiveBounds.Contains(point));
+            return _contents.FindAll(e => e.EffectiveBounds.Contains(point));
         }
 
 
-        private IContainable Find(Func<IContainable, IContainable, bool> compare)
+        private IContainable FindItem(Func<IContainable, IContainable, bool> compare)
         {
             if (_contents.Count == 0)
                 return default(IContainable);
@@ -85,27 +85,27 @@ namespace MonoGame.Forms
         }
 
 
-        public IContainable RightmostControl()
+        public IContainable FarthestItemRight()
         {
-            return Find((a, b) => a.Bounds.Right > b.Bounds.Right);
+            return FindItem((a, b) => a.Bounds.Right > b.Bounds.Right);
         }
 
 
-        public IContainable LeftmostControl()
+        public IContainable FarthestItemLeft()
         {
-            return Find((a, b) => a.Bounds.Left < b.Bounds.Left);
+            return FindItem((a, b) => a.Bounds.Left < b.Bounds.Left);
         }
 
 
-        public IContainable HighestControl()
+        public IContainable FarthestItemUp()
         {
-            return Find((a, b) => a.Bounds.Top < b.Bounds.Top);
+            return FindItem((a, b) => a.Bounds.Top < b.Bounds.Top);
         }
 
 
-        public IContainable LowestControl()
+        public IContainable FarthestItemDown()
         {
-            return Find((a, b) => a.Bounds.Bottom > b.Bounds.Bottom);
+            return FindItem((a, b) => a.Bounds.Bottom > b.Bounds.Bottom);
         }
         #endregion
     }

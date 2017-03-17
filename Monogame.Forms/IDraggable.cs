@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonoGame.Forms.Controls
+namespace MonoGame.Forms
 {
     public interface IDraggable
     {

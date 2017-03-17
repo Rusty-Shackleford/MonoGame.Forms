@@ -18,14 +18,12 @@ namespace MonoGame.Forms.Controls.Renderers
             {
                 throw new NotSupportedException("This control is missing a style.");
             }
-            style = owner.Style;
         }
         #endregion
 
 
         #region [ Members ]
-        ControlStyle style;
-        Control owner;
+        protected Control owner;
 
         Texture2D UseTexture
         {
@@ -34,39 +32,39 @@ namespace MonoGame.Forms.Controls.Renderers
                 switch (owner.State)
                 {
                     case ControlState.Default:
-                        return style.TextureDefault;
+                        return owner.Style.TextureDefault;
 
                     case ControlState.Hovered:
-                        if (style.TextureHovered != null)
+                        if (owner.Style.TextureHovered != null)
                         {
-                            return style.TextureHovered;
+                            return owner.Style.TextureHovered;
                         }
-                        return style.TextureDefault;
+                        return owner.Style.TextureDefault;
 
                     case ControlState.Pressed:
-                        if (style.TexturePressed != null)
+                        if (owner.Style.TexturePressed != null)
                         {
-                            return style.TexturePressed;
+                            return owner.Style.TexturePressed;
                         }
-                        return style.TextureDefault;
+                        return owner.Style.TextureDefault;
 
                     case ControlState.Disabled:
-                        if (style.TextureDisabled != null)
+                        if (owner.Style.TextureDisabled != null)
                         {
-                            return style.TextureDisabled;
+                            return owner.Style.TextureDisabled;
                         }
-                        return style.TextureDefault;
+                        return owner.Style.TextureDefault;
 
                     case ControlState.Activated:
-                        if (style.TextureActive != null)
+                        if (owner.Style.TextureActive != null)
                         {
-                            return style.TextureActive;
+                            return owner.Style.TextureActive;
                         }
-                        return style.TextureDefault;
+                        return owner.Style.TextureDefault;
                         
 
                     default:
-                        return style.TextureDefault;
+                        return owner.Style.TextureDefault;
                 }
             }
         }
@@ -74,9 +72,9 @@ namespace MonoGame.Forms.Controls.Renderers
 
 
         #region [ Render ]
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(UseTexture, owner.Position, style.Color);
+            spriteBatch.Draw(UseTexture, owner.Position, owner.Style.Color);
         }
         #endregion
 

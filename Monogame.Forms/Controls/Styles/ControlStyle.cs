@@ -84,6 +84,7 @@ namespace MonoGame.Forms.Controls.Styles
 
         public FontStyle FontStyle { get; set; }
 
+        public ScrollerStyle ScrollerStyle { get; set; }
         #endregion
     }
 }

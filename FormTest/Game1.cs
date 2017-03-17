@@ -19,7 +19,7 @@ namespace FormTest
     {
         public GraphicsDeviceManager Graphics;
         SpriteBatch spriteBatch;
-        ControlManager manager;
+        ContentManager manager;
         public readonly int ScreenWidthStart = 1280;
         public readonly int ScreenHeightStart = 720;
 
@@ -73,7 +73,7 @@ namespace FormTest
 
 
             // Control Manager - updates / draws all controls
-            manager = new ControlManager(GraphicsDevice);
+            manager = new ContentManager(GraphicsDevice, new Viewport(0, 0, Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight));
 
 
             // Button:
@@ -92,6 +92,8 @@ namespace FormTest
             ControlStyle panelStyle = new ControlStyle(Assets.Terminal);
             panelStyle.FontStyle = buttonStyle.FontStyle;
             Panel myPanel = new Panel(panelStyle);
+            myPanel.DragAreaOffset = new Rectangle(0, 0, myPanel.Width, 20);
+            myPanel.EnableDragging = true;
             btn.AnchorTo(myPanel, PositionType.Inside_Top_Left, 10, 30, AnchorType.Bounds);
             manager.Add(myPanel);
             manager.Add(btn);
@@ -163,7 +165,7 @@ namespace FormTest
             GraphicsDevice.Clear(new Color(30,30,30));
 
             // DRAW CONTROL MANAGER
-            manager.Draw(gameTime);
+            manager.Draw();
 
             // Service Provider:  Last so that mouse on top:
             ServiceProvider.Draw(gameTime);
