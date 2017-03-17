@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using MonoGame.Forms.Anchoring;
+using MonoGame.Extended;
 
 namespace MonoGame.Forms.Services
 {
-    public class GameViewport : IAnchorable, MonoGame.Extended.IUpdate
+    public class GameViewport : IAnchorable, IUpdate
     {
         #region [ Constructor ]
         public GameViewport()

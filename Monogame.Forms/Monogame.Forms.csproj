@@ -45,8 +45,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnchoredRectangle.cs" />
     <Compile Include="Anchoring\AnchorComponent.cs" />
     <Compile Include="Anchoring\Anchoring.cs" />
+    <Compile Include="Anchoring\AnchorToArgs.cs" />
     <Compile Include="Anchoring\Enum_AnchorType.cs" />
     <Compile Include="Anchoring\Enum_PositionType.cs" />
     <Compile Include="Anchoring\Enum_VerticalAlign.cs" />
@@ -79,7 +81,6 @@
     <Compile Include="IContainer.cs" />
     <Compile Include="IInteractive.cs" />
     <Compile Include="IRender.cs" />
-    <Compile Include="Anchoring\PositionChangedArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DevConsole.cs" />
     <Compile Include="Services\GameViewport.cs" />

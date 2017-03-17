@@ -17,11 +17,19 @@ namespace FormTest
     /// </summary>
     public class Game1 : Game
     {
+        #region [ Members ]
         public GraphicsDeviceManager Graphics;
         SpriteBatch spriteBatch;
         ContentManager manager;
         public readonly int ScreenWidthStart = 1280;
         public readonly int ScreenHeightStart = 720;
+
+        Panel myPanel;
+
+        #endregion
+
+
+
 
         public Game1()
         {
@@ -46,7 +54,7 @@ namespace FormTest
 
             // Service Provider
             ServiceProvider.Initialize(this);
-            
+
             base.Initialize();
         }
 
@@ -73,14 +81,13 @@ namespace FormTest
 
 
             // Control Manager - updates / draws all controls
-            manager = new ContentManager(GraphicsDevice, new Viewport(0, 0, Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight));
-
+            manager = new ContentManager(GraphicsDevice, new AnchoredRectangle(0, 0, Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight));
 
             // Button:
             Button btn = new Button("DO NOT PUSH", buttonStyle);
             btn.OnClicked += btn_click;
             btn.Position = new Vector2(100, 100);
-            
+
 
             // Label:  will re-use the same FontStyle as buttons
             Label myLabel = new Label("Here is a longer string of text to evaluate.", buttonStyle.FontStyle);
@@ -91,9 +98,11 @@ namespace FormTest
             // Panel:
             ControlStyle panelStyle = new ControlStyle(Assets.Terminal);
             panelStyle.FontStyle = buttonStyle.FontStyle;
-            Panel myPanel = new Panel(panelStyle);
+
+            myPanel = new Panel("test", panelStyle, false, true);
             myPanel.DragAreaOffset = new Rectangle(0, 0, myPanel.Width, 20);
-            myPanel.EnableDragging = true;
+            myPanel.SetContentArea(10, 20, myPanel.Width - 10, myPanel.Height - 20);
+
             btn.AnchorTo(myPanel, PositionType.Inside_Top_Left, 10, 30, AnchorType.Bounds);
             manager.Add(myPanel);
             manager.Add(btn);
@@ -151,6 +160,9 @@ namespace FormTest
             // UPDATE CONTROL MANAGER
             manager.Update(gameTime);
 
+            var console = ServiceProvider.GetService<DevConsole>();
+            console.Write("Panel Position: " + myPanel.Position.ToString());
+            console.Write("Drag Position: " + myPanel.DragBounds.ToString());
             base.Update(gameTime);
         }
 
@@ -162,7 +174,7 @@ namespace FormTest
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(new Color(30,30,30));
+            GraphicsDevice.Clear(new Color(30, 30, 30));
 
             // DRAW CONTROL MANAGER
             manager.Draw();

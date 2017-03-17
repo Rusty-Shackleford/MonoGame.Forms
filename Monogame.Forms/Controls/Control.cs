@@ -53,7 +53,7 @@ namespace MonoGame.Forms.Controls
             {
                 return new Rectangle(
                     (int)(Position.X + DragAreaOffset.X),
-                    (int)(Position.X + DragAreaOffset.Y),
+                    (int)(Position.Y + DragAreaOffset.Y),
                     DragAreaOffset.Width,
                     DragAreaOffset.Height
                     );

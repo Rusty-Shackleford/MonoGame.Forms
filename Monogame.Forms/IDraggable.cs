@@ -10,6 +10,7 @@ namespace MonoGame.Forms
 {
     public interface IDraggable
     {
+        Rectangle DragBounds { get; }
         bool Dragging { get; }
         Vector2 OriginalPosition { get; }
         void CancelDrag();

@@ -15,12 +15,13 @@ namespace MonoGame.Forms
     public class ContentManager : IUpdate
     {
         #region [ Constructor ]
-        public ContentManager(GraphicsDevice gd, Viewport port)
+        public ContentManager(GraphicsDevice gd, AnchoredRectangle contentArea)
         {
-            if (port.Bounds != Rectangle.Empty)
+            if (contentArea != AnchoredRectangle.Empty)
             {
-                _viewport = port;
+                throw new NotSupportedException("ContentArea cannot be empty.");
             }
+            ContentArea = contentArea;
 
             Contents = new Contents();
             _sb = new SpriteBatch(gd);
@@ -39,7 +40,8 @@ namespace MonoGame.Forms
         #region [ Members ]
         public Contents Contents { get; protected set; }
         private SpriteBatch _sb;
-        private Viewport _viewport;
+
+        public AnchoredRectangle ContentArea { get; set; }
 
         private readonly MouseListener _mouse = ServiceProvider.GetService<MouseListener>();
         private IInteractive _hoveredItem { get; set; }
@@ -58,7 +60,7 @@ namespace MonoGame.Forms
         {
             if (item != null)
             {
-                if (!_viewport.Bounds.Contains(item.Bounds))
+                if (!ContentArea.Contains(item.Bounds))
                 {
                     throw new NotSupportedException("Could not add " + item.GetType().ToString() + " as it does not fit within this ContentManager's viewport.");
                 }
@@ -88,15 +90,20 @@ namespace MonoGame.Forms
 
         private void moveCheck(object sender, MouseEventArgs e)
         {
-            if (_viewport.Bounds.Contains(e.Position))
+            if (ContentArea.Contains(e.Position))
             {
                 IContainable c = Contents.GetItemAtPoint(e.Position);
                 if (_movingItem == null && c != null)
                 {
                     if (c is IDraggable)
                     {
-                        _movingItem = (IDraggable)c;
-                        _movingItem.DragStart(e);
+                        IDraggable movingItem = (IDraggable)c;
+                        if (movingItem.DragBounds.Contains(e.Position))
+                        {
+                            _movingItem = (IDraggable)c;
+                            _movingItem.DragStart(e);
+                        }
+
                     }
                 }
             }
@@ -108,7 +115,7 @@ namespace MonoGame.Forms
         #region [ Hover ]
         private void Hover(object sender, MouseEventArgs e)
         {
-            if (_viewport.Bounds.Contains(e.Position))
+            if (ContentArea.Contains(e.Position))
             {
                 IContainable c = Contents.GetItemAtPoint(e.Position);
                 if (c != null)
@@ -138,7 +145,7 @@ namespace MonoGame.Forms
         #region [ Press ]
         private void Press(object sender, MouseEventArgs e)
         {
-            if (_viewport.Bounds.Contains(e.Position))
+            if (ContentArea.Contains(e.Position))
             {
                 IContainable c = Contents.GetItemAtPoint(e.Position);
                 if (c != null)
@@ -157,7 +164,7 @@ namespace MonoGame.Forms
         #region [ Click ]
         private void Click(object sender, MouseEventArgs e)
         {
-            if (_viewport.Bounds.Contains(e.Position))
+            if (ContentArea.Contains(e.Position))
             {
                 IContainable c = Contents.GetItemAtPoint(e.Position);
 

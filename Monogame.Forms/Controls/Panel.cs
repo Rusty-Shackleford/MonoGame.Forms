@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.InputListeners;
+using MonoGame.Forms.Anchoring;
 using MonoGame.Forms.Controls.Renderers;
 using MonoGame.Forms.Controls.Scrollers;
 using MonoGame.Forms.Controls.Styles;
@@ -31,6 +32,9 @@ namespace MonoGame.Forms.Controls
             }
 
             Style = style;
+            Width = Style.TextureDefault.Width;
+            Height = Style.TextureDefault.Height;
+
             if (!string.IsNullOrEmpty(title))
             {
                 label = new Label(title, Style.FontStyle);
@@ -39,7 +43,9 @@ namespace MonoGame.Forms.Controls
 
             render = new ControlRenderer(this);
 
-            ContentManager = new ContentManager(ServiceProvider.Graphics, new Viewport(ContentBounds));
+            AnchorToArgs arg = new AnchorToArgs(this, PositionType.Inside_Top_Left, 0, 0, AnchorType.Bounds);
+            ContentManager = new ContentManager(ServiceProvider.Graphics, new AnchoredRectangle(Rectangle.Empty, arg));
+
 
             if (scrolls)
             {
@@ -59,7 +65,12 @@ namespace MonoGame.Forms.Controls
         protected Label label;
         public bool Initialized { get; protected set; }
 
-        public Rectangle ContentBounds { get; set; }
+        public void SetContentArea(int offsetX, int offsetY, int width, int height)
+        {
+            ContentManager.ContentArea.Width = width;
+            ContentManager.ContentArea.Height = height;
+            ContentManager.ContentArea.Position = new Vector2(Position.X + offsetX, Position.Y + offsetY);
+        }
 
         public ContentManager ContentManager { get; protected set; }
         protected Scroller scroller;
