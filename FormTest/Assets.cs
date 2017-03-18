@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.BitmapFonts;
 using System;
@@ -33,6 +34,8 @@ namespace FormTest
         // Azure Blue Highlight:   21, 132, 221
         // Background Very Dark Grey: 30, 30, 30
         // Background Dark Grey: 40, 40, 40 
+        public static Color ScrollThumb = new Color(104, 104, 104);
+        public static Color ScrollBar = new Color(62, 62, 66);
 
         public static void LoadContent(ContentManager content)
         {

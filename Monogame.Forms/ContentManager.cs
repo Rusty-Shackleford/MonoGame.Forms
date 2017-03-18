@@ -80,6 +80,7 @@ namespace MonoGame.Forms
             }
         }
 
+
         private void move(object sender, MouseEventArgs e)
         {
             if (_movingItem != null)
@@ -87,6 +88,7 @@ namespace MonoGame.Forms
                 _movingItem.Drag(e);
             }
         }
+
 
         private void moveCheck(object sender, MouseEventArgs e)
         {
@@ -118,10 +120,6 @@ namespace MonoGame.Forms
             if (ContentArea.Contains(e.Position))
             {
                 IContainable c = Contents.GetItemAtPoint(e.Position);
-                if (c != null)
-                {
-                    ServiceProvider.GetService<DevConsole>().Write("Have a thing");
-                }
                 if (_hoveredItem != null)
                 {
                     if (_hoveredItem != (IContainable)c)

@@ -5,6 +5,7 @@ using MonoGame.Forms.Anchoring;
 using MonoGame.Forms.Controls.Renderers;
 using MonoGame.Forms.Controls.Scrollers;
 using MonoGame.Forms.Controls.Styles;
+using MonoGame.Forms.Renderers;
 using MonoGame.Forms.Services;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace MonoGame.Forms.Controls
 {
-    public class Panel : Control, IContainer
+    public class Panel : Control, IContainer, IScroll
     {
 
         #region [ Constructor ]
@@ -53,7 +54,9 @@ namespace MonoGame.Forms.Controls
                 {
                     throw new NotSupportedException("ControlStyle must contain ScrollerStyle to enable scrolling.");
                 }
-                scroller = new Scroller(ContentManager.Contents, Style.ScrollerStyle);
+                Scrolls = true;
+                scroller = new Scroller(this);
+                _contentsRenderer = new RenderInScissor(ServiceProvider.Graphics);
             }
 
         }
@@ -72,8 +75,10 @@ namespace MonoGame.Forms.Controls
             ContentManager.ContentArea.Position = new Vector2(Position.X + offsetX, Position.Y + offsetY);
         }
 
+        public bool Scrolls { get; set; }
         public ContentManager ContentManager { get; protected set; }
         protected Scroller scroller;
+        protected RenderInScissor _contentsRenderer;
         #endregion
 
 
@@ -81,6 +86,36 @@ namespace MonoGame.Forms.Controls
         public virtual void Initialize()
         {
             Initialized = true;
+        }
+        #endregion
+
+
+        #region [ Event Handling ]
+        private void WheelMove(object sender, MouseEventArgs e)
+        {
+            //if (Bounds.Contains(e.Position) && e.ScrollWheelDelta != 0)
+            //{
+            //    if (CanScroll)
+            //    {
+            //        if (Math.Abs(e.ScrollWheelDelta) <= 25)
+            //        {
+            //            _layout.Move(e.ScrollWheelDelta);
+            //        }
+            //        else
+            //        {
+            //            // One "click" scroll of MY mouse returns a huge amount.
+            //            // Normalize it a bit to keep it from going crazy.
+            //            if (e.ScrollWheelDelta > 0)
+            //            {
+            //                _layout.Move(25);
+            //            }
+            //            else
+            //            {
+            //                _layout.Move(-25);
+            //            }
+            //        }
+            //    }
+            //}
         }
         #endregion
 
@@ -103,9 +138,19 @@ namespace MonoGame.Forms.Controls
                 {
                     label.Draw(spriteBatch);
                 }
-
-                // Draw my contents:
-                ContentManager.Draw();
+                if (Scrolls)
+                {
+                    
+                    scroller.Draw(spriteBatch);
+                    spriteBatch.End();
+                    _contentsRenderer.Draw(ContentManager);
+                    spriteBatch.Begin();
+                }
+                else
+                {
+                    // Draw my contents:
+                    ContentManager.Draw();
+                }
             }
         }
         #endregion

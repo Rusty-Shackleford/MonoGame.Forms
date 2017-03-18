@@ -53,6 +53,37 @@ namespace MonoGame.Forms
 
 
         #region [ Queries ]
+        public int TotalHeight(float y)
+        {
+            var lowest = int.MinValue;
+            for (int i = 0; i < _contents.Count; i++)
+            {
+                if (_contents[i].Bounds.Bottom > lowest)
+                {
+                    lowest = _contents[i].Bounds.Bottom;
+                }
+            }
+            return lowest - (int)y;
+        }
+
+        public int TotalWidth(float x)
+        {
+            var lowest = int.MinValue;
+            for (int i = 0; i < _contents.Count; i++)
+            {
+                if (_contents[i].Bounds.Right > lowest)
+                {
+                    lowest = _contents[i].Bounds.Right;
+                }
+            }
+            return lowest - (int)x;
+        }
+
+        public Vector2 TotalSize(Vector2 position)
+        {
+            return new Vector2(TotalWidth(position.X), TotalHeight(position.Y));
+        }
+
         public IContainable GetItemAtPoint(Point point)
         {
             return _contents.LastOrDefault(e => e.EffectiveBounds.Contains(point));

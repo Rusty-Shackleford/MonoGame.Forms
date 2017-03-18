@@ -29,20 +29,16 @@ namespace FormTest
         #endregion
 
 
-
-
+        #region [ Constructor ]
         public Game1()
         {
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
+        #endregion
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
+
+        #region [ Init ]
         protected override void Initialize()
         {
             Graphics.PreferredBackBufferWidth = ScreenWidthStart;
@@ -57,11 +53,10 @@ namespace FormTest
 
             base.Initialize();
         }
+        #endregion
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
+
+        #region [ Load Content ]
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -98,14 +93,16 @@ namespace FormTest
             // Panel:
             ControlStyle panelStyle = new ControlStyle(Assets.Terminal);
             panelStyle.FontStyle = buttonStyle.FontStyle;
+            panelStyle.ScrollerStyle = new ScrollerStyle(Assets.ScrollBar, Assets.ScrollThumb);
 
-            myPanel = new Panel("test", panelStyle, false, true);
+            myPanel = new Panel("test", panelStyle, true, true);
             myPanel.DragAreaOffset = new Rectangle(0, 0, myPanel.Width, 20);
             myPanel.SetContentArea(10, 20, myPanel.Width - 10, myPanel.Height - 20);
 
             btn.AnchorTo(myPanel, PositionType.Inside_Top_Left, 10, 30, AnchorType.Bounds);
+            myPanel.ContentManager.Add(btn);
             manager.Add(myPanel);
-            manager.Add(btn);
+
 
             // FPS Counter:
             ServiceProvider.AddService(new FramesPerSecondCounter(100));
@@ -124,27 +121,25 @@ namespace FormTest
             ServiceProvider.GetService<MouseCursor>().SetCursor(Assets.Cursor);
 
         }
+        #endregion
 
+
+        #region [ Button ]
         private void btn_click(object sender, EventArgs e)
         {
             Console.WriteLine("click");
+            var console = ServiceProvider.GetService<DevConsole>();
+            console.Write("Click", 1);
         }
+        #endregion
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
-        protected override void UnloadContent()
-        {
-            // TODO: Unload any non ContentManager content here
 
-        }
+        #region [ Unload ]
+        protected override void UnloadContent() { }
+        #endregion
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+
+        #region [ Update ]
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -161,10 +156,12 @@ namespace FormTest
             manager.Update(gameTime);
 
             var console = ServiceProvider.GetService<DevConsole>();
+
+            console.Write("Panel ContentMgr Content Area Bounds: " + myPanel.ContentManager.ContentArea.Bounds.ToString());
             console.Write("Panel Position: " + myPanel.Position.ToString());
-            console.Write("Drag Position: " + myPanel.DragBounds.ToString());
             base.Update(gameTime);
         }
+        #endregion
 
 
         #region [ Draw ]
