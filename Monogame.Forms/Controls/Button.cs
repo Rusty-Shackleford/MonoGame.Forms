@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Forms.Controls.Styles;
+﻿using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Forms.Controls.Renderers;
+using MonoGame.Forms.Controls.Styles;
+using System;
+
 
 namespace MonoGame.Forms.Controls
 {

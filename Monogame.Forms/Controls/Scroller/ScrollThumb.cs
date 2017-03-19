@@ -23,7 +23,7 @@ namespace MonoGame.Forms.Controls.Scrollers
         #endregion
 
 
-        #region [ Update ]
+        #region [ Update Height ]
         public void UpdateHeight(ScrollBar bar, Contents contents)
         {
             float virtualHeight = (float)bar.Height;
@@ -31,18 +31,22 @@ namespace MonoGame.Forms.Controls.Scrollers
             var height = virtualHeight * ratio;
             _height = (int)height;
         }
+        #endregion
 
-        public override void Update(GameTime gameTime)
-        {
-            throw new NotImplementedException();
-        }
 
-        public void MoveCheck()
+        #region [ Move Check ]
+        protected override void MoveCheck()
         {
-            if (true)
+            if (Bounds.Bottom > _scrollBar.Bounds.Top)
             {
-
+                Position = new Vector2(Position.X, (_scrollBar.Bounds.Top - Height));
             }
+            if (Bounds.Top < _scrollBar.Bounds.Top)
+            {
+                Position = new Vector2(Position.X, _scrollBar.Bounds.Top);
+            }
+            //TODO: Left Off Here----- LEFT / RIGHT
+
         }
         #endregion
 
@@ -53,7 +57,5 @@ namespace MonoGame.Forms.Controls.Scrollers
             throw new NotImplementedException();
         }
         #endregion
-
-
     }
 }

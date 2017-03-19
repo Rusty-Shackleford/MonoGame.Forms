@@ -1,21 +1,16 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended.InputListeners;
+using MonoGame.Forms.Controls.Renderers;
 using MonoGame.Forms.Controls.Styles;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MonoGame.Extended.InputListeners;
-using MonoGame.Forms.Controls.Renderers;
+
 
 namespace MonoGame.Forms.Controls
 {
     public class DropDown : Control
     {
-
         #region [ Constructor ]
         public DropDown(IList items, ControlStyle dropDownStyle, ControlStyle buttonStyle) : base()
         {
@@ -51,7 +46,6 @@ namespace MonoGame.Forms.Controls
 
 
         #region [ Events ]
-
         public override void Click(MouseEventArgs e)
         {
             // If we were already active, check for a click on one of
@@ -69,15 +63,9 @@ namespace MonoGame.Forms.Controls
         }
         #endregion
 
+
         #region [ Item Click ]
 
-        #endregion
-
-        #region [ Update ]
-        public override void Update(GameTime gameTime)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
 
 

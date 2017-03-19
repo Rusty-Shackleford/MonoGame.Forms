@@ -4,6 +4,7 @@ using MonoGame.Forms.Controls.Styles;
 using System;
 using Microsoft.Xna.Framework;
 
+
 namespace MonoGame.Forms.Controls
 {
     public class Label : Control, IDisplayText

@@ -48,21 +48,11 @@ namespace MonoGame.Forms.Controls
         }
 
 
-        #region [ Update ]
-        public void Update(GameTime gameTime)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
-
-
         #region [ Draw ]
         public void Draw(SpriteBatch spriteBatch)
         {
             throw new NotImplementedException();
         }
         #endregion
-
-
     }
 }

@@ -90,8 +90,6 @@ namespace MonoGame.Forms.Controls
                 Move(e);
             }
         }
-
-
         public void DragEnd(MouseEventArgs e)
         {
             if (EnableDragging)
@@ -100,8 +98,6 @@ namespace MonoGame.Forms.Controls
                 Move(e);
             }
         }
-
-
         public void Drag(MouseEventArgs e)
         {
             if (EnableDragging)
@@ -109,15 +105,18 @@ namespace MonoGame.Forms.Controls
                 Move(e);
             }
         }
-
         public virtual Vector2 Move(MouseEventArgs e)
         {
             Position += e.DistanceMoved;
             return Position;
         }
+
+        protected virtual void MoveCheck() { }
+
         public virtual Vector2 Move(Vector2 distance)
         {
             Position += distance;
+            MoveCheck();
             return Position;
         }
         #endregion

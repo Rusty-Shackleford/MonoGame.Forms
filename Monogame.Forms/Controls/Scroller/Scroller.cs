@@ -21,10 +21,9 @@ namespace MonoGame.Forms.Controls.Scrollers
             {
                 throw new NotSupportedException("Scrolling controls require a Scroller Style.");
             }
-
-            _content = _owner.ContentManager.Contents;
             _style = _owner.Style.ScrollerStyle;
         }
+        #endregion
 
 
         #region [ Initialize ]
@@ -36,26 +35,21 @@ namespace MonoGame.Forms.Controls.Scrollers
             ScrollBar.AnchorTo(_owner, Anchoring.PositionType.Inside_Top_Right, 0, _owner.DragBounds.Height, Anchoring.AnchorType.Bounds);
 
             ScrollThumb = new ScrollThumb(ScrollBar);
-            ScrollThumb.Position = new Vector2(ScrollBar.Position.X + 4, ScrollBar.Position.Y);
+            ScrollThumb.Position = new Vector2(ScrollBar.Position.X + _style.ScrollThumbOffset.X, ScrollBar.Position.Y);
             ScrollThumb.Width = 9;
 
-            // USE CASES FOR UPDATING THE SCROLL THUMB HEIGHT:
+            // USE CASES FOR UPDATING THE SCROLL THUMB HEIGHT HERE:
             ScrollBar.OnPositionChanged += UpdateThumbHeight;
             _owner.ContentManager.OnItemAdded += UpdateThumbHeight;
             _owner.ContentManager.OnItemRemoved += UpdateThumbHeight;
+
+            // Input Handlers
+            var contents = new Contents();
+            contents.Add(ScrollBar);
+            contents.Add(ScrollThumb);
+            _input = new InputHandler(contents);
+
             Initialized = true;
-
-
-        }
-        #endregion
-
-
-        private void UpdateThumbHeight(object sender, EventArgs e)
-        {
-            if (ScrollNeeded)
-            {
-                ScrollThumb.UpdateHeight(sender as ScrollBar, _content);
-            }
         }
         #endregion
 
@@ -63,10 +57,13 @@ namespace MonoGame.Forms.Controls.Scrollers
         #region [ Members ]
         public bool Initialized { get; private set; }
         private readonly MouseListener _mouse = ServiceProvider.GetService<MouseListener>();
-        private IScroll _owner;
-        private Contents _content;
+        private readonly IScroll _owner;
+        private Contents _ownerContents
+        {
+            get { return _owner.ContentManager.Contents; }
+        }
 
-        private ScrollerStyle _style;
+        private readonly ScrollerStyle _style;
         private InputHandler _input;
 
         public ScrollBar ScrollBar { get; private set; }
@@ -74,7 +71,18 @@ namespace MonoGame.Forms.Controls.Scrollers
 
         public bool ScrollNeeded
         {
-            get { return (_content.TotalHeight() > _owner.ContentManager.ContentArea.Height); }
+            get { return (_ownerContents.TotalHeight() > _owner.ContentManager.ContentArea.Height); }
+        }
+        #endregion
+
+
+        #region [ Update Thumb ]
+        private void UpdateThumbHeight(object sender, EventArgs e)
+        {
+            if (ScrollNeeded)
+            {
+                ScrollThumb.UpdateHeight(sender as ScrollBar, _ownerContents);
+            }
         }
         #endregion
 
