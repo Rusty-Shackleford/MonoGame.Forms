@@ -74,13 +74,14 @@
     <Compile Include="Controls\Scroller\Scroller.cs" />
     <Compile Include="Controls\Scroller\ScrollThumb.cs" />
     <Compile Include="Controls\Styles\ControlStyle.cs" />
-    <Compile Include="Controls\Styles\IStyle.cs" />
     <Compile Include="Controls\Styles\FontStyle.cs" />
     <Compile Include="Anchoring\IAnchorable.cs" />
     <Compile Include="Controls\Styles\ScrollerStyle.cs" />
     <Compile Include="IContainable.cs" />
     <Compile Include="IContainer.cs" />
     <Compile Include="IInteractive.cs" />
+    <Compile Include="BoundingInputManager.cs" />
+    <Compile Include="InputHandler.cs" />
     <Compile Include="IRender.cs" />
     <Compile Include="IScroll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

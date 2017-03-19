@@ -4,7 +4,7 @@ using MonoGame.Extended.InputListeners;
 using MonoGame.Forms.Anchoring;
 using MonoGame.Forms.Controls.Styles;
 using System;
-
+using System.ComponentModel;
 
 namespace MonoGame.Forms.Controls
 {
@@ -21,6 +21,7 @@ namespace MonoGame.Forms.Controls
 
         #region [ Anchoring ]
         public event EventHandler OnPositionChanged;
+        public event EventHandler OnPropertyChanged;
         private AnchorComponent _anchor;
         public AnchorComponent Anchor
         {
@@ -45,7 +46,19 @@ namespace MonoGame.Forms.Controls
 
         #region [ Dragging ]
         public bool EnableDragging { get; set; }
-        public Rectangle DragAreaOffset { get; set; }
+        private Rectangle _dragAreaOffset;
+        public Rectangle DragAreaOffset
+        {
+            get { return _dragAreaOffset; }
+            set
+            {
+                if (value != _dragAreaOffset)
+                {
+                    _dragAreaOffset = value;
+                    OnPropertyChanged?.Invoke(this, EventArgs.Empty);
+                }
+            }
+        }
 
         public Rectangle DragBounds
         {
@@ -64,7 +77,7 @@ namespace MonoGame.Forms.Controls
         public Vector2 OriginalPosition
         {
             get { return _originalPosition; }
-            private set { _originalPosition = value; }
+            protected set { _originalPosition = value; }
         }
 
         public void CancelDrag() { }
@@ -120,6 +133,7 @@ namespace MonoGame.Forms.Controls
                     _style = value;
                     Width = Style.TextureDefault.Width;
                     Height = Style.TextureDefault.Height;
+                    OnPropertyChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
@@ -187,6 +201,7 @@ namespace MonoGame.Forms.Controls
                 {
                     _height = value;
                     OnPositionChanged?.Invoke(this, EventArgs.Empty);
+                    OnPropertyChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
@@ -201,6 +216,7 @@ namespace MonoGame.Forms.Controls
                 {
                     _width = value;
                     OnPositionChanged?.Invoke(this, EventArgs.Empty);
+                    OnPropertyChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
@@ -253,8 +269,10 @@ namespace MonoGame.Forms.Controls
             {
                 if (value != _position)
                 {
+                    OriginalPosition = _position;
                     _position = value;
                     OnPositionChanged?.Invoke(this, EventArgs.Empty);
+                    OnPropertyChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }

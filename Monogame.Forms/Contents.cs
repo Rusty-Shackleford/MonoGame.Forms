@@ -45,43 +45,27 @@ namespace MonoGame.Forms
             _contents.Add(control);
         }
 
-        public void Remove(IContainable control)
+        public bool Remove(IContainable control)
         {
-            _contents.Remove(control);
+            return _contents.Remove(control);
         }
         #endregion
 
 
         #region [ Queries ]
-        public int TotalHeight(float y)
+        public float TotalHeight()
         {
-            var lowest = int.MinValue;
-            for (int i = 0; i < _contents.Count; i++)
-            {
-                if (_contents[i].Bounds.Bottom > lowest)
-                {
-                    lowest = _contents[i].Bounds.Bottom;
-                }
-            }
-            return lowest - (int)y;
+            return Math.Abs(LowestItem().Bounds.Bottom - HighestItem().Bounds.Top);
         }
 
-        public int TotalWidth(float x)
+        public float TotalWidth()
         {
-            var lowest = int.MinValue;
-            for (int i = 0; i < _contents.Count; i++)
-            {
-                if (_contents[i].Bounds.Right > lowest)
-                {
-                    lowest = _contents[i].Bounds.Right;
-                }
-            }
-            return lowest - (int)x;
+            return Math.Abs(RightmostItem().Bounds.Right - LeftmostItem().Bounds.Left);
         }
 
         public Vector2 TotalSize(Vector2 position)
         {
-            return new Vector2(TotalWidth(position.X), TotalHeight(position.Y));
+            return new Vector2(TotalWidth(), TotalHeight());
         }
 
         public IContainable GetItemAtPoint(Point point)
@@ -116,25 +100,25 @@ namespace MonoGame.Forms
         }
 
 
-        public IContainable FarthestItemRight()
+        public IContainable RightmostItem()
         {
             return FindItem((a, b) => a.Bounds.Right > b.Bounds.Right);
         }
 
 
-        public IContainable FarthestItemLeft()
+        public IContainable LeftmostItem()
         {
             return FindItem((a, b) => a.Bounds.Left < b.Bounds.Left);
         }
 
 
-        public IContainable FarthestItemUp()
+        public IContainable HighestItem()
         {
             return FindItem((a, b) => a.Bounds.Top < b.Bounds.Top);
         }
 
 
-        public IContainable FarthestItemDown()
+        public IContainable LowestItem()
         {
             return FindItem((a, b) => a.Bounds.Bottom > b.Bounds.Bottom);
         }

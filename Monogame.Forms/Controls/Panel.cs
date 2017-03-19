@@ -75,6 +75,7 @@ namespace MonoGame.Forms.Controls
             ContentManager.ContentArea.Position = new Vector2(Position.X + offsetX, Position.Y + offsetY);
         }
 
+
         public bool Scrolls { get; set; }
         public ContentManager ContentManager { get; protected set; }
         protected Scroller scroller;
@@ -91,6 +92,11 @@ namespace MonoGame.Forms.Controls
 
 
         #region [ Event Handling ]
+        public override Vector2 Move(MouseEventArgs e)
+        {
+            scroller.ScrollThumb.Move(e);
+            return base.Move(e);
+        }
         private void WheelMove(object sender, MouseEventArgs e)
         {
             //if (Bounds.Contains(e.Position) && e.ScrollWheelDelta != 0)
@@ -123,6 +129,10 @@ namespace MonoGame.Forms.Controls
         #region [ Update ]
         public override void Update(GameTime gameTime)
         {
+            if (!scroller.Initialized)
+            {
+                scroller.Initialize();
+            }
             ContentManager.Update(gameTime);
         }
         #endregion

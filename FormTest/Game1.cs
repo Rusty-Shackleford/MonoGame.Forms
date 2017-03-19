@@ -46,7 +46,7 @@ namespace FormTest
             Graphics.ApplyChanges();
 
             Window.IsBorderless = false;
-            Window.AllowUserResizing = false;   //TODO: Allow Window Resizing
+            Window.AllowUserResizing = false;
 
             // Service Provider
             ServiceProvider.Initialize(this);
@@ -78,10 +78,6 @@ namespace FormTest
             // Control Manager - updates / draws all controls
             manager = new ContentManager(GraphicsDevice, new AnchoredRectangle(0, 0, Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight));
 
-            // Button:
-            Button btn = new Button("DO NOT PUSH", buttonStyle);
-            btn.OnClicked += btn_click;
-            btn.Position = new Vector2(100, 100);
 
 
             // Label:  will re-use the same FontStyle as buttons
@@ -96,11 +92,23 @@ namespace FormTest
             panelStyle.ScrollerStyle = new ScrollerStyle(Assets.ScrollBar, Assets.ScrollThumb);
 
             myPanel = new Panel("test", panelStyle, true, true);
+            myPanel.Position = new Vector2(200, 350);
             myPanel.DragAreaOffset = new Rectangle(0, 0, myPanel.Width, 20);
             myPanel.SetContentArea(10, 20, myPanel.Width - 10, myPanel.Height - 20);
 
+
+            // Button:
+            Button btn = new Button("DO NOT PUSH", buttonStyle);
+            btn.OnClicked += btn_click;
             btn.AnchorTo(myPanel, PositionType.Inside_Top_Left, 10, 30, AnchorType.Bounds);
+
+            Button btn2 = new Button("Button two", buttonStyle);
+            btn2.OnClicked += btn_click;
+            btn2.AnchorTo(btn, PositionType.Below_Center, 0, 300, AnchorType.Bounds);
+
+
             myPanel.ContentManager.Add(btn);
+            myPanel.ContentManager.Add(btn2);
             manager.Add(myPanel);
 
 
