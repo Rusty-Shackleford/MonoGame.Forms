@@ -9,10 +9,10 @@ namespace MonoGame.Forms
     /// <summary>
     /// Listens for events to be passed to controls within the Contents
     /// </summary>
-    public class InputHandler
+    public class InputManager
     {
         #region [ Constructor ]
-        public InputHandler(Contents contents)
+        public InputManager(Contents contents)
         {
             Contents = contents;
             _mouse.MouseMoved += Hover;

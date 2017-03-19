@@ -11,7 +11,7 @@ namespace MonoGame.Forms
     /// In theory this would reduce overhead by only triggering
     /// events when input is caught within the ContentArea
     /// </summary>
-    public class BoundingInputManager : InputHandler
+    public class BoundingInputManager : InputManager
     {
         #region [ Constructor ]
         public BoundingInputManager(ContentManager contentManager) : 

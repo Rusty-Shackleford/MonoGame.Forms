@@ -67,7 +67,7 @@ namespace MonoGame.Forms.Controls.Scrollers
         private Contents _content;
 
         private ScrollerStyle _style;
-        private BoundingInputManager _input;
+        private InputManager
 
         public ScrollBar ScrollBar { get; private set; }
         public ScrollThumb ScrollThumb { get; private set; }
