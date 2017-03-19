@@ -25,7 +25,7 @@ namespace MonoGame.Forms
 
             Contents = new Contents();
             _sb = new SpriteBatch(gd);
-            _input = new BoundingInputManager(this);
+            _input = new BoundingInputHandler(this);
         }
         #endregion
 
@@ -35,7 +35,7 @@ namespace MonoGame.Forms
         public event EventHandler OnItemAdded;
         public event EventHandler OnItemRemoved;
 
-        private BoundingInputManager _input;
+        private BoundingInputHandler _input;
 
         private SpriteBatch _sb;
 

@@ -80,8 +80,8 @@
     <Compile Include="IContainable.cs" />
     <Compile Include="IContainer.cs" />
     <Compile Include="IInteractive.cs" />
-    <Compile Include="BoundingInputManager.cs" />
-    <Compile Include="InputManager.cs" />
+    <Compile Include="BoundingInputHandler.cs" />
+    <Compile Include="InputHandler.cs" />
     <Compile Include="IRender.cs" />
     <Compile Include="IScroll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
