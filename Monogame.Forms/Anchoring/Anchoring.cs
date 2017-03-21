@@ -80,7 +80,7 @@ namespace MonoGame.Forms.Anchoring
                 case PositionType.Inside_Bottom_Left:
                     return new Vector2(
                         anchor.X + offset.X,
-                        anchor.Bottom + offset.Y
+                        anchor.Bottom + offset.Y - anchored.Height
                         );
                 case PositionType.Inside_Bottom_Center:
                     return new Vector2(

@@ -21,6 +21,12 @@ namespace MonoGame.Forms.Controls.Scrollers
             _owner = owner;
             _style = style;
             _owner.ScrollBar.OnPositionChanged += ScrollBarMoved;
+            if (_owner.HasButtons)
+            {
+                _owner.ScrollUpBtn.OnClicked += ScrollUpBtnClick;
+                _owner.ScrollDownBtn.OnClicked += ScrollDownBtnClick;
+
+            }
             DistanceFromTop = 0;
             ApplyMoveCheck = MoveCheck;
         }
@@ -48,6 +54,16 @@ namespace MonoGame.Forms.Controls.Scrollers
                 }
             }
         }
+        public float Top
+        {
+            get
+            {
+                if (_owner.HasButtons)
+                    return _owner.ScrollDownBtn.Bounds.Bottom;
+                else
+                    return _owner.ScrollBar.Position.Y;
+            }
+        }
         #endregion
 
 
@@ -70,28 +86,35 @@ namespace MonoGame.Forms.Controls.Scrollers
         #region [ Movement ]
         private void ScrollBarMoved(object sender, PositionChangedArgs e)
         {
-            MoveTo(new Vector2(_owner.ScrollBar.Position.X, _owner.ScrollBar.Position.Y + DistanceFromTop));
+            MoveTo(new Vector2(_owner.ScrollBar.Position.X + _style.ScrollThumbOffset.X, _owner.ScrollBar.Position.Y + DistanceFromTop));
         }
 
+
+        protected void ScrollUpBtnClick(object sender, EventArgs e)
+        {
+            Move(new Vector2(0, (_owner.ScrollBarArea.Height / 20) * -1));
+        }
+        protected void ScrollDownBtnClick(object sender, EventArgs e)
+        {
+            Move(new Vector2(0, (_owner.ScrollBarArea.Height / 20)));
+        }
 
         protected Vector2 MoveCheck(Vector2 proposedPosition)
         {
             Rectangle myProposedBounds = new Rectangle((int)proposedPosition.X, (int)proposedPosition.Y, Width, Height);
             Vector2 myCounterOffer = proposedPosition;
 
-            var scrollBarBounds = _owner.ScrollBar.Bounds;
-
-            if (myProposedBounds.Bottom > scrollBarBounds.Bottom)
+            if (myProposedBounds.Bottom > _owner.ScrollBarArea.Bottom)
             {
-                myCounterOffer = new Vector2(myCounterOffer.X, (scrollBarBounds.Bottom - Height));
+                myCounterOffer = new Vector2(myCounterOffer.X, (_owner.ScrollBarArea.Bottom - Height));
             }
-            if (myProposedBounds.Top < scrollBarBounds.Top)
+            if (myProposedBounds.Top < _owner.ScrollBarArea.Top)
             {
-                myCounterOffer = new Vector2(myCounterOffer.X, scrollBarBounds.Top);
+                myCounterOffer = new Vector2(myCounterOffer.X, _owner.ScrollBarArea.Top);
             }
-            if (myProposedBounds.Left != scrollBarBounds.Left + _style.ScrollThumbOffset.X)
+            if (myProposedBounds.Left != _owner.ScrollBarArea.X)
             {
-                myCounterOffer = new Vector2(scrollBarBounds.X + _style.ScrollThumbOffset.X, myCounterOffer.Y);
+                myCounterOffer = new Vector2(_owner.ScrollBarArea.X, myCounterOffer.Y);
             }
 
             if (myCounterOffer != Position)

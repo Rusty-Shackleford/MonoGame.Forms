@@ -35,9 +35,23 @@ namespace MonoGame.Forms.Controls.Scrollers
             ScrollBar.Height = _owner.Bounds.Height - _owner.DragBounds.Height;
             ScrollBar.AnchorTo(_owner, PositionType.Inside_Top_Right, 0, _owner.DragBounds.Height, AnchorType.Bounds);
 
+            if (_style.ScrollUpButtonStyle != null && _style.ScrollDownButtonStyle != null)
+            {
+                ScrollUpBtn = new Button(_style.ScrollUpButtonStyle);
+                ScrollUpBtn.AnchorTo(
+                    ScrollBar, PositionType.Inside_Top_Left, 0, 0, AnchorType.Bounds
+                );
+
+                ScrollDownBtn = new Button(_style.ScrollDownButtonStyle);
+                ScrollDownBtn.AnchorTo(
+                    ScrollBar, PositionType.Inside_Bottom_Left, 0, 0, AnchorType.Bounds
+                );
+                HasButtons = true;
+            }
+
             ScrollThumb = new ScrollThumb(this, _style);
             ScrollThumb.EnableDragging = true;
-            ScrollThumb.MoveTo(new Vector2(ScrollBar.Position.X + _style.ScrollThumbOffset.X, ScrollBar.Position.Y));
+            ScrollThumb.MoveTo(new Vector2(ScrollBarArea.X, ScrollBarArea.Y));
             ScrollThumb.Width = _style.ScrollThumbWidth;
             ScrollThumb.UpdateHeight(ScrollBar, _ownerContents);
             ScrollThumb.OnScrolled += Scroll;
@@ -54,6 +68,11 @@ namespace MonoGame.Forms.Controls.Scrollers
             var contents = new Contents();
             contents.Add(ScrollBar);
             contents.Add(ScrollThumb);
+            if (HasButtons)
+            {
+                contents.Add(ScrollUpBtn);
+                contents.Add(ScrollDownBtn);
+            }
             _input = new InputHandler(contents);
 
             Initialized = true;
@@ -77,16 +96,52 @@ namespace MonoGame.Forms.Controls.Scrollers
 
         public ScrollBar ScrollBar { get; private set; }
         public ScrollThumb ScrollThumb { get; private set; }
+        public Button ScrollDownBtn { get; private set; }
+        public Button ScrollUpBtn { get; set; }
+        public bool HasButtons { get; private set; }
 
         public bool ScrollNeeded => (_ownerContents.TotalHeight() > _owner.ContentManager.ContentArea.Height);
-        public float ScrollHeight => ScrollBar.Height - ScrollThumb.Height; 
-        #endregion
 
-
-        #region [ ScrollThumb Moved ]
-        private void ThumbMoved(object sender, PositionChangedArgs e)
+        public float ScrollHeight
         {
-            
+            get
+            {
+                if (HasButtons)
+                {
+                    return ((ScrollBar.Height - ScrollDownBtn.Height - ScrollUpBtn.Height) - ScrollThumb.Height);
+                }
+                else
+                {
+                    return (ScrollBar.Height - ScrollThumb.Height);
+                }
+            }
+        }
+
+        public Rectangle ScrollBarArea
+        {
+            get
+            {
+                if (HasButtons)
+                {
+                    return new Rectangle(
+                        (int)ScrollBar.Position.X + (int)_style.ScrollThumbOffset.X,
+                        (int)ScrollBar.Position.Y + ScrollUpBtn.Height,
+                        ScrollBar.Width,
+                        (ScrollBar.Height - ScrollDownBtn.Height - ScrollUpBtn.Height)
+                    );
+                    // ((ScrollBar.Height - ScrollDownBtn.Height - ScrollUpBtn.Height) - ScrollThumb.Height)
+                }
+                else
+                {
+                    return new Rectangle(
+                        (int)ScrollBar.Position.X + (int)_style.ScrollThumbOffset.X,
+                        (int)ScrollBar.Position.Y,
+                        ScrollBar.Width,
+                        (ScrollBar.Height - ScrollThumb.Height)
+                    );
+                }
+
+            }
         }
         #endregion
 
@@ -120,11 +175,17 @@ namespace MonoGame.Forms.Controls.Scrollers
 
 
         #region [ Draw ]
+        //TODO: Move to Renderer
         public void Draw(SpriteBatch spriteBatch)
         {
             if (ScrollBar != null)
             {
                 spriteBatch.Draw(_style.Pixel, ScrollBar.Bounds, _style.ScrollBar);
+            }
+            if (HasButtons)
+            {
+                ScrollUpBtn.Draw(spriteBatch);
+                ScrollDownBtn.Draw(spriteBatch);
             }
             if (ScrollThumb != null)
             {

@@ -105,6 +105,11 @@ namespace FormTest
             btn.OnClicked += btn_click;
             btn.AnchorTo(myPanel, PositionType.Inside_Top_Left, 10, 30, AnchorType.Bounds);
 
+            // Label:  will re-use the same FontStyle as buttons
+            Label myLabel1 =
+                new Label("Scroll Down vv", buttonStyle.FontStyle);
+            myLabel1.AnchorTo(btn, PositionType.Below_Left, 0, 50, AnchorType.Bounds);
+
             Button btn2 = new Button("Button two", buttonStyle);
             btn2.OnClicked += btn_click2;
             btn2.AnchorTo(btn, PositionType.Below_Center, 0, 300, AnchorType.Bounds);
@@ -115,6 +120,7 @@ namespace FormTest
             myLabel.AnchorTo(btn2, PositionType.Below_Left, 0, 300, AnchorType.Bounds);
 
             myPanel.ContentManager.Add(btn);
+            myPanel.ContentManager.Add(myLabel1);
             myPanel.ContentManager.Add(btn2);
             myPanel.ContentManager.Add(myLabel);
             manager.Add(myPanel);
