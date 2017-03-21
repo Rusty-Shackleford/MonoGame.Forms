@@ -26,8 +26,10 @@ namespace MonoGame.Forms
 
 
         #region [ Members ]
+        public event EventHandler OnDimmensionChanged;
+        public Vector2 DistanceMoved { get; set; }
         public static AnchoredRectangle Empty { get { return new AnchoredRectangle(); } }
-
+        public Vector2 OriginalPosition { get; protected set; }
         protected int _height;
         public virtual int Height
         {
@@ -37,7 +39,7 @@ namespace MonoGame.Forms
                 if (value != _height)
                 {
                     _height = value;
-                    OnPositionChanged?.Invoke(this, EventArgs.Empty);
+                    OnDimmensionChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
@@ -51,12 +53,13 @@ namespace MonoGame.Forms
                 if (value != _width)
                 {
                     _width = value;
-                    OnPositionChanged?.Invoke(this, EventArgs.Empty);
+                    OnDimmensionChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
 
         public Rectangle EffectiveBounds { get { return Bounds; } }
+
         private Vector2 _position;
         public Vector2 Position
         {
@@ -65,10 +68,23 @@ namespace MonoGame.Forms
             {
                 if (value != _position)
                 {
+                    OriginalPosition = _position;
                     _position = value;
-                    OnPositionChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
+        }
+        public Vector2 Move(Vector2 distance)
+        {
+            Position += distance;
+            if (Position != OriginalPosition)
+            {
+                OnPositionChanged?.Invoke(this, new PositionChangedArgs(distance));
+            }
+            return Position;
+        }
+        public virtual Vector2 MoveTo(Vector2 newPosition)
+        {
+            return Move(newPosition - Position);
         }
 
         public Rectangle Bounds
@@ -79,7 +95,7 @@ namespace MonoGame.Forms
 
 
         #region [ Anchoring ]
-        public event EventHandler OnPositionChanged;
+        public event EventHandler<PositionChangedArgs> OnPositionChanged;
         private AnchorComponent _anchor;
         public AnchorComponent Anchor
         {

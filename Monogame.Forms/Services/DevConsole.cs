@@ -116,7 +116,7 @@ namespace MonoGame.Forms.Services
         public void Update(GameTime gameTime)
         {
             // Not sure about moving yet...
-            Panel.Position = Position;
+            Panel.Move(Position - Panel.Position);
 
             // Remove old messages
             RemoveExpiredMessages();

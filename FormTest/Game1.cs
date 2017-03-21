@@ -79,10 +79,9 @@ namespace FormTest
             manager = new ContentManager(GraphicsDevice, new AnchoredRectangle(0, 0, Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight));
 
 
-
             // Label:  will re-use the same FontStyle as buttons
             Label myLabel = new Label("Here is a longer string of text to evaluate.", buttonStyle.FontStyle);
-            myLabel.Position = new Vector2(200, 200);
+            myLabel.MoveTo(new Vector2(200, 200));
             manager.Add(myLabel);
 
 
@@ -91,11 +90,12 @@ namespace FormTest
             panelStyle.FontStyle = buttonStyle.FontStyle;
             panelStyle.ScrollerStyle = new ScrollerStyle(Assets.ScrollBar, Assets.ScrollThumb);
             panelStyle.ScrollerStyle.ScrollThumbOffset = new Vector2(4, 0);
-
+            panelStyle.ScrollerStyle.ScrollThumbWidth = 9;
+            panelStyle.ScrollerStyle.ScrollBarWidth = 18;
 
             myPanel = new Panel("test", panelStyle, true, true);
-            myPanel.Position = new Vector2(200, 350);
-            myPanel.DragAreaOffset = new Rectangle(0, 0, myPanel.Width, 20);
+            myPanel.MoveTo(new Vector2(200, 350));
+            myPanel.DragAreaOffset = new Rectangle(0, 0, myPanel.Width, 23);
             myPanel.SetContentArea(10, 20, myPanel.Width - 10, myPanel.Height - 20);
 
 

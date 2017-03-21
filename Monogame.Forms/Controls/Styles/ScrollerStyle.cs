@@ -1,12 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended;
 using MonoGame.Forms.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace MonoGame.Forms.Controls.Styles
 {
@@ -37,8 +32,10 @@ namespace MonoGame.Forms.Controls.Styles
         public Color ScrollThumbColor { get; private set; }
         public Texture2D ScrollBarTexture { get; private set; }
         public Texture2D ScrollThumbTexture { get; private set; }
+
+        public int ScrollBarWidth { get; set; }
         public Vector2 ScrollThumbOffset { get; set; }
-        public float ScrollThumbWidth { get; set; }
+        public int ScrollThumbWidth { get; set; }
 
         // TODO: Implement ScrollBar Offset / buttons
         // public Vector2 ScrollBarOffset { get; set; }

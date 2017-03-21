@@ -46,12 +46,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnchoredRectangle.cs" />
+    <Compile Include="Anchoring\AnchorChangedArgs.cs" />
     <Compile Include="Anchoring\AnchorComponent.cs" />
     <Compile Include="Anchoring\Anchoring.cs" />
     <Compile Include="Anchoring\AnchorToArgs.cs" />
     <Compile Include="Anchoring\Enum_AnchorType.cs" />
     <Compile Include="Anchoring\Enum_PositionType.cs" />
     <Compile Include="Anchoring\Enum_VerticalAlign.cs" />
+    <Compile Include="Anchoring\PositionChangedArgs.cs" />
     <Compile Include="BoxProperty.cs" />
     <Compile Include="ContentManager.cs" />
     <Compile Include="Contents.cs" />

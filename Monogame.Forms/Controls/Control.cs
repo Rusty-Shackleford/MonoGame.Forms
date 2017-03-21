@@ -17,11 +17,8 @@ namespace MonoGame.Forms.Controls
         }
 
 
-        #region [ Members ]
-
         #region [ Anchoring ]
-        public event EventHandler OnPositionChanged;
-        public event EventHandler OnPropertyChanged;
+        public event EventHandler<PositionChangedArgs> OnPositionChanged;
         private AnchorComponent _anchor;
         public AnchorComponent Anchor
         {
@@ -44,8 +41,15 @@ namespace MonoGame.Forms.Controls
         }
         #endregion
 
-        #region [ Dragging ]
+
+        #region [ Drag / Move ]
         public bool EnableDragging { get; set; }
+        protected delegate Vector2 MoveCheckRules(Vector2 proposedPosition);
+        protected MoveCheckRules ApplyMoveCheck;
+        private Vector2 _dragStartPosition;
+        public event EventHandler OnCancelDrag;
+        public Vector2 DistanceMoved { get; set; }
+
         private Rectangle _dragAreaOffset;
         public Rectangle DragAreaOffset
         {
@@ -72,21 +76,17 @@ namespace MonoGame.Forms.Controls
                     );
             }
         }
-
-        private Vector2 _originalPosition;
-        public Vector2 OriginalPosition
+        public void CancelDrag()
         {
-            get { return _originalPosition; }
-            protected set { _originalPosition = value; }
+            OnCancelDrag?.Invoke(this, EventArgs.Empty);
+            Position = _dragStartPosition;
         }
-
-        public void CancelDrag() { }
-
         public void DragStart(MouseEventArgs e)
         {
             if (EnableDragging)
             {
                 Dragging = true;
+                _dragStartPosition = Position;
                 Move(e);
             }
         }
@@ -107,20 +107,119 @@ namespace MonoGame.Forms.Controls
         }
         public virtual Vector2 Move(MouseEventArgs e)
         {
-            Position += e.DistanceMoved;
-            return Position;
+            return Move(e.DistanceMoved);
         }
-
-        protected virtual void MoveCheck() { }
-
         public virtual Vector2 Move(Vector2 distance)
         {
             Position += distance;
-            MoveCheck();
+            if (Position != OriginalPosition)
+            {
+                OnPositionChanged?.Invoke(this, new PositionChangedArgs(distance));
+               // OnPropertyChanged?.Invoke(this, EventArgs.Empty);
+            }
             return Position;
+        }
+        public virtual Vector2 MoveTo(Vector2 newPosition)
+        {
+            return Move(newPosition - Position);
         }
         #endregion
 
+
+        #region [ Physical ]
+        public Vector2 OriginalPosition { get; private set; }
+
+        private Vector2 _position;
+        public Vector2 Position
+        {
+            get { return _position; }
+            private set
+            {
+                if (value != _position)
+                {
+                    var result = ApplyMoveCheck?.Invoke(value);
+                    if (result != null)
+                    {
+                        if (result != _position)
+                        {
+                            OriginalPosition = _position;
+                            _position = (Vector2)result;
+                        }
+                    }
+                    else
+                    {
+                        OriginalPosition = _position;
+                        _position = value;
+                    }
+                }
+            }
+        }
+
+        protected int _height;
+        public virtual int Height
+        {
+            get { return _height; }
+            set
+            {
+                if (value != _height)
+                {
+                    _height = value;
+                    OnDimmensionChanged?.Invoke(this, EventArgs.Empty);
+                    OnPropertyChanged?.Invoke(this, EventArgs.Empty);
+                }
+            }
+        }
+        protected int _width;
+        public virtual int Width
+        {
+            get { return _width; }
+            set
+            {
+                if (value != _width)
+                {
+                    _width = value;
+                    OnDimmensionChanged?.Invoke(this, EventArgs.Empty);
+                    OnPropertyChanged?.Invoke(this, EventArgs.Empty);
+                }
+            }
+        }
+        public virtual Rectangle Bounds
+        {
+            get
+            {
+                return new Rectangle(
+                    (int)Position.X,
+                    (int)Position.Y,
+                    Width,
+                    Height
+                );
+            }
+        }
+        /// <summary>
+        /// Some controls may use images that contain a drop-shadow, or other effects near the edges which will
+        /// be in the image,but should not count for clicks, hover, etc.  This would be a rectangle drawn within the
+        /// Bounding Rectangle of the control.
+        /// Altneratively, some controls contain more space than they appear, such as drop downs
+        /// </summary>
+        public Rectangle EffectiveBounds
+        {
+            get
+            {
+                if (Style != null)
+                {
+                    if (Style.InteractiveOffset != Rectangle.Empty)
+                    {
+                        return new Rectangle(
+                            (int)Position.X + Style.InteractiveOffset.X,
+                            (int)Position.Y + Style.InteractiveOffset.Y,
+                            Style.InteractiveOffset.Width,
+                            Style.InteractiveOffset.Height
+                        );
+                    }
+                }
+                return Bounds;
+            }
+        }
         private ControlStyle _style;
         public virtual ControlStyle Style
         {
@@ -136,13 +235,26 @@ namespace MonoGame.Forms.Controls
                 }
             }
         }
+        #endregion
 
+
+        #region [ Events ]
+        public event EventHandler OnGainedFocus;
+        public event EventHandler OnLostFocus;
+        public event EventHandler OnClicked;
+        public event EventHandler OnMouseOver;
+        public event EventHandler OnMouseOut;
+        public event EventHandler OnPropertyChanged;
+        public event EventHandler OnDimmensionChanged;
+        #endregion
+
+
+        #region [ State ]
         public bool Visible { get; set; }
         public bool Enabled { get; set; }
         public bool Pressed { get; protected set; }
         public bool Hovered { get; protected set; }
         public bool Dragging { get; protected set; }
-
 
         private bool _hasFocus;
         public bool HasFocus
@@ -188,104 +300,10 @@ namespace MonoGame.Forms.Controls
                 return ControlState.Default;
             }
         }
-
-
-        protected int _height;
-        public virtual int Height
-        {
-            get { return _height; }
-            set
-            {
-                if (value != _height)
-                {
-                    _height = value;
-                    OnPositionChanged?.Invoke(this, EventArgs.Empty);
-                    OnPropertyChanged?.Invoke(this, EventArgs.Empty);
-                }
-            }
-        }
-
-        protected int _width;
-        public virtual int Width
-        {
-            get { return _width; }
-            set
-            {
-                if (value != _width)
-                {
-                    _width = value;
-                    OnPositionChanged?.Invoke(this, EventArgs.Empty);
-                    OnPropertyChanged?.Invoke(this, EventArgs.Empty);
-                }
-            }
-        }
-
-        public virtual Rectangle Bounds
-        {
-            get
-            {
-                return new Rectangle(
-                    (int)Position.X,
-                    (int)Position.Y,
-                    Width,
-                    Height
-                );
-            }
-        }
-
-
-        /// <summary>
-        /// Some controls may use images that contain a drop-shadow, or other effects near the edges which will
-        /// be in the image,but should not count for clicks, hover, etc.  This would be a rectangle drawn within the
-        /// Bounding Rectangle of the control.
-        /// Altneratively, some controls contain more space than they appear, such as drop downs
-        /// </summary>
-        public Rectangle EffectiveBounds
-        {
-            get
-            {
-                if (Style != null)
-                {
-                    if (Style.InteractiveOffset != Rectangle.Empty)
-                    {
-                        return new Rectangle(
-                            (int)Position.X + Style.InteractiveOffset.X,
-                            (int)Position.Y + Style.InteractiveOffset.Y,
-                            Style.InteractiveOffset.Width,
-                            Style.InteractiveOffset.Height
-                        );
-                    }
-                }
-                return Bounds;
-            }
-        }
-
-        private Vector2 _position;
-        public Vector2 Position
-        {
-            get { return _position; }
-            set
-            {
-                if (value != _position)
-                {
-                    OriginalPosition = _position;
-                    _position = value;
-                    OnPositionChanged?.Invoke(this, EventArgs.Empty);
-                    OnPropertyChanged?.Invoke(this, EventArgs.Empty);
-                }
-            }
-        }
         #endregion
 
 
-        #region [ Events ]
-        public event EventHandler OnGainedFocus;
-        public event EventHandler OnLostFocus;
-        public event EventHandler OnClicked;
-        public event EventHandler OnDimmensionChange;
-        public event EventHandler OnMouseOver;
-        public event EventHandler OnMouseOut;
-
+        #region [ Mouse Actions]
         public virtual void MouseOver(MouseEventArgs e)
         {
             if (Enabled && !Hovered)
@@ -297,8 +315,6 @@ namespace MonoGame.Forms.Controls
                 }
             }
         }
-
-
         public virtual void MouseOut(MouseEventArgs e)
         {
             if (Enabled && Hovered)
@@ -310,8 +326,6 @@ namespace MonoGame.Forms.Controls
                 }
             }
         }
-
-
         public virtual void Press(MouseEventArgs e)
         {
             if (Enabled)
@@ -320,8 +334,6 @@ namespace MonoGame.Forms.Controls
                 HasFocus = true;
             }
         }
-
-
         public virtual void Click(MouseEventArgs e)
         {
             if (Enabled && Hovered)

@@ -2,7 +2,6 @@
 using MonoGame.Forms.Services;
 
 
-//TODO: Up Next - Make this generic to handle scrollers items.
 namespace MonoGame.Forms
 {
     /// <summary>
@@ -40,11 +39,11 @@ namespace MonoGame.Forms
         #region [ Movement ]
 
 
-        protected override void MoveCheck(object sender, MouseEventArgs e)
+        protected override void MoveStart(object sender, MouseEventArgs e)
         {
             if (_contentManager.ContentArea.Contains(e.Position))
             {
-                base.MoveCheck(sender, e);
+                base.MoveStart(sender, e);
             }
 
         }

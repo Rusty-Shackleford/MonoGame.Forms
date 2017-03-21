@@ -17,15 +17,24 @@ namespace MonoGame.Forms.Services
 
 
         #region [ Members ]
+        public Vector2 DistanceMoved { get; set; }
+        public event EventHandler<PositionChangedArgs> OnPositionChanged;
+        public event EventHandler OnDimmensionChanged;
+
+        public Vector2 OriginalPosition { get; protected set; }
         public Vector2 Position
         {
             get { return Vector2.Zero; }
             set { Position = Vector2.Zero; }
         }
-
-        public event EventHandler OnPositionChanged;
-
-        #region [ Field: Height ]
+        public Vector2 Move(Vector2 distance)
+        {
+            return Position;
+        }
+        public Vector2 MoveTo(Vector2 newPosition)
+        {
+            return Position;
+        }
         private int _previousHeight;
         private int _height;
         public int Height
@@ -37,14 +46,10 @@ namespace MonoGame.Forms.Services
                 {
                     _previousHeight = _height;
                     _height = value;
-                    OnPositionChanged?.Invoke(this, EventArgs.Empty);
+                    OnDimmensionChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
-        #endregion
-
-
-        #region [ Field: Width ]
         private int _previousWidth;
         private int _width;
         public int Width
@@ -56,13 +61,10 @@ namespace MonoGame.Forms.Services
                 {
                     _previousWidth = _width;
                     _width = value;
-                    OnPositionChanged?.Invoke(this, EventArgs.Empty);
+                    OnDimmensionChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
-        #endregion
-
-
         public Rectangle Bounds
         {
             get { return new Rectangle(0, 0, Width, Height); }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.InputListeners;
+using MonoGame.Forms.Anchoring;
 using MonoGame.Forms.Controls.Styles;
 using MonoGame.Forms.Services;
 using System;
@@ -30,16 +31,17 @@ namespace MonoGame.Forms.Controls.Scrollers
         public void Initialize()
         {
             ScrollBar = new ScrollBar();
-            ScrollBar.Width = 18;
+            ScrollBar.Width = _style.ScrollBarWidth;
             ScrollBar.Height = _owner.Bounds.Height - _owner.DragBounds.Height;
-            ScrollBar.AnchorTo(_owner, Anchoring.PositionType.Inside_Top_Right, 0, _owner.DragBounds.Height, Anchoring.AnchorType.Bounds);
+            ScrollBar.AnchorTo(_owner, PositionType.Inside_Top_Right, 0, _owner.DragBounds.Height, AnchorType.Bounds);
 
-            ScrollThumb = new ScrollThumb(ScrollBar);
-            ScrollThumb.Position = new Vector2(ScrollBar.Position.X + _style.ScrollThumbOffset.X, ScrollBar.Position.Y);
-            ScrollThumb.Width = 9;
+            ScrollThumb = new ScrollThumb(this, _style);
+            ScrollThumb.EnableDragging = true;
+            ScrollThumb.MoveTo(new Vector2(ScrollBar.Position.X + _style.ScrollThumbOffset.X, ScrollBar.Position.Y));
+            ScrollThumb.Width = _style.ScrollThumbWidth;
+            ScrollThumb.UpdateHeight(ScrollBar, _ownerContents);
 
             // USE CASES FOR UPDATING THE SCROLL THUMB HEIGHT HERE:
-            ScrollBar.OnPositionChanged += UpdateThumbHeight;
             _owner.ContentManager.OnItemAdded += UpdateThumbHeight;
             _owner.ContentManager.OnItemRemoved += UpdateThumbHeight;
 
@@ -72,6 +74,14 @@ namespace MonoGame.Forms.Controls.Scrollers
         public bool ScrollNeeded
         {
             get { return (_ownerContents.TotalHeight() > _owner.ContentManager.ContentArea.Height); }
+        }
+        #endregion
+
+
+        #region [ ScrollThumb Moved ]
+        private void ThumbMoved(object sender, PositionChangedArgs e)
+        {
+            
         }
         #endregion
 

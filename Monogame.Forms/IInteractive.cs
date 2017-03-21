@@ -12,7 +12,7 @@ namespace MonoGame.Forms
         event EventHandler OnGainedFocus;
         event EventHandler OnLostFocus;
         event EventHandler OnClicked;
-        event EventHandler OnDimmensionChange;
+        event EventHandler OnDimmensionChanged;
         event EventHandler OnMouseOver;
         event EventHandler OnMouseOut;
 

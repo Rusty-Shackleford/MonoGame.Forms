@@ -13,11 +13,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace MonoGame.Forms.Controls
 {
     public class Panel : Control, IContainer, IScroll
     {
-
         #region [ Constructor ]
         public Panel(ControlStyle style) : this("", style) { }
         public Panel(string title, ControlStyle style, bool scrolls = false, bool moves = false) : base()
@@ -92,11 +92,11 @@ namespace MonoGame.Forms.Controls
 
 
         #region [ Event Handling ]
-        public override Vector2 Move(MouseEventArgs e)
-        {
-            scroller.ScrollThumb.Move(e);
-            return base.Move(e);
-        }
+        //public override Vector2 Move(MouseEventArgs e)
+        //{
+        //    scroller.ScrollThumb.Move(e);
+        //    return base.Move(e);
+        //}
         private void WheelMove(object sender, MouseEventArgs e)
         {
             //if (Bounds.Contains(e.Position) && e.ScrollWheelDelta != 0)
@@ -150,7 +150,6 @@ namespace MonoGame.Forms.Controls
                 }
                 if (Scrolls)
                 {
-                    
                     scroller.Draw(spriteBatch);
                     spriteBatch.End();
                     _contentsRenderer.Draw(ContentManager);

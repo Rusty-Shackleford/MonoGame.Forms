@@ -19,7 +19,7 @@ namespace MonoGame.Forms
             _mouse.MouseDown += Press;
             _mouse.MouseUp += Click;
 
-            _mouse.MouseDragStart += MoveCheck;
+            _mouse.MouseDragStart += MoveStart;
             _mouse.MouseDrag += Move;
             _mouse.MouseDragEnd += MoveEnd;
         }
@@ -61,7 +61,7 @@ namespace MonoGame.Forms
         }
 
 
-        protected virtual void MoveCheck(object sender, MouseEventArgs e)
+        protected virtual void MoveStart(object sender, MouseEventArgs e)
         {
             IContainable c = Contents.GetItemAtPoint(e.Position);
             if (_movingItem == null && c != null)
