@@ -129,10 +129,15 @@ namespace MonoGame.Forms.Controls
         #region [ Update ]
         public override void Update(GameTime gameTime)
         {
-            if (!scroller.Initialized)
+            if (Scrolls)
             {
-                scroller.Initialize();
+                if (!scroller.Initialized)
+                {
+                    scroller.Initialize();
+                }
+                scroller.Update(gameTime);
             }
+
             ContentManager.Update(gameTime);
         }
         #endregion

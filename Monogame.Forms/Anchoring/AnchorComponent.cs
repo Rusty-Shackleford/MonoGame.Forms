@@ -13,9 +13,9 @@ namespace MonoGame.Forms.Anchoring
             _anchorType = anchorType;
             _positionType = positionType;
             _anchorOffset = offset;
-            _target.OnPositionChanged += PositionChange;
+            _target.OnPositionChanged += AnchorMoved;
             _target.OnDimmensionChanged += DimmensionChange;
-            HaulAnchor();
+            InitialPlacement();
         }
 
         private IAnchorable _owner;
@@ -62,26 +62,30 @@ namespace MonoGame.Forms.Anchoring
             return Anchoring.GetPosition(_targetRectangle, _owner.Bounds, _positionType, _anchorOffset);
         }
 
-        private void PositionChange(object sender, PositionChangedArgs e)
+        /// <summary>
+        /// Moved the anchored item the same distance its anchor moved.
+        /// </summary>
+        /// <param name="sender">Anchor</param>
+        /// <param name="e">PositionChangedArgs</param>
+        private void AnchorMoved(object sender, PositionChangedArgs e)
         {
-            HaulAnchor();
-        }
-        private void DimmensionChange(object sender, EventArgs e)
-        {
-            HaulAnchor();
+            _owner.Move(e.DistanceMoved);
         }
 
-        public void HaulAnchor()
+        private void DimmensionChange(object sender, EventArgs e)
         {
-            var oldPos = _owner.Position;
-            var newPos = AnchoredPosition();
-            _owner.MoveTo(newPos);
-            _owner.DistanceMoved = newPos - oldPos;
+            //NOTE: TEST THIS - not sure if correct!
+            InitialPlacement();
+        }
+
+        public void InitialPlacement()
+        {
+            _owner.MoveTo(AnchoredPosition());
         }
 
         public void RemoveAnchor()
         {
-            _target.OnPositionChanged -= PositionChange;
+            _target.OnPositionChanged -= AnchorMoved;
         }
 
 

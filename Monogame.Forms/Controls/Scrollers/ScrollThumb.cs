@@ -21,7 +21,7 @@ namespace MonoGame.Forms.Controls.Scrollers
             _owner = owner;
             _style = style;
             _owner.ScrollBar.OnPositionChanged += ScrollBarMoved;
-            _distanceFromTop = 0;
+            DistanceFromTop = 0;
             ApplyMoveCheck = MoveCheck;
         }
         #endregion
@@ -30,7 +30,24 @@ namespace MonoGame.Forms.Controls.Scrollers
         #region [ Members ]
         private readonly Scroller _owner;
         private readonly ScrollerStyle _style;
+
+        public event EventHandler<ScrollArgs> OnScrolled;
+
         private float _distanceFromTop;
+        public float DistanceFromTop
+        {
+            get { return _distanceFromTop; }
+            private set
+            {
+                if (value != _distanceFromTop)
+                {
+                    var previousDistance = _distanceFromTop;
+                    _distanceFromTop = value;
+                    var scrollArgs = new ScrollArgs(previousDistance, _distanceFromTop, _owner.ScrollHeight);
+                    OnScrolled?.Invoke(this, scrollArgs);
+                }
+            }
+        }
         #endregion
 
 
@@ -40,20 +57,23 @@ namespace MonoGame.Forms.Controls.Scrollers
             float virtualHeight = bar.Height;
             float ratio = virtualHeight / contents.TotalHeight();
             var height = virtualHeight * ratio;
-            _height = (int)height;
-
-            DragAreaOffset = new Rectangle(DragAreaOffset.X, DragAreaOffset.Y, Width, Height);
-        }
-        private void ScrollBarMoved(object sender, PositionChangedArgs e)
-        {
-            //Console.WriteLine("Told by bar to move: " + e.DistanceMoved.ToString());
-            //Console.WriteLine("Thumb Moved submitted for approval: " + (Position - OriginalPosition).ToString());
-            MoveTo(new Vector2(_owner.ScrollBar.Position.X, _owner.ScrollBar.Position.Y + _distanceFromTop));
+            if (height != _height)
+            {
+                _height = (int)height;
+                DragAreaOffset = new Rectangle(DragAreaOffset.X, DragAreaOffset.Y, Width, Height);
+                //TODO:  Need to recalculate where we should be based on the new height
+            }
         }
         #endregion
 
 
-        #region [ Move Check ]
+        #region [ Movement ]
+        private void ScrollBarMoved(object sender, PositionChangedArgs e)
+        {
+            MoveTo(new Vector2(_owner.ScrollBar.Position.X, _owner.ScrollBar.Position.Y + DistanceFromTop));
+        }
+
+
         protected Vector2 MoveCheck(Vector2 proposedPosition)
         {
             Rectangle myProposedBounds = new Rectangle((int)proposedPosition.X, (int)proposedPosition.Y, Width, Height);
@@ -76,14 +96,11 @@ namespace MonoGame.Forms.Controls.Scrollers
 
             if (myCounterOffer != Position)
             {
-                _distanceFromTop = myCounterOffer.Y - _owner.ScrollBar.Position.Y;
-               // Console.WriteLine("Move Check - move to: " + myCounterOffer.ToString());
+                DistanceFromTop = myCounterOffer.Y - _owner.ScrollBar.Position.Y;
                 return myCounterOffer;
             }
-          //  Console.WriteLine("Move Check - denied");
             return Position;
         }
-
         #endregion
 
 

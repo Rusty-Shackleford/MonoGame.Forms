@@ -12,10 +12,12 @@ namespace FormTest
 {
     public static class Assets
     {
-
         public static Texture2D Button { get; private set; }
         public static Texture2D ButtonHover { get; private set; }
         public static Texture2D ButtonPressed { get; private set; }
+
+        public static Texture2D ArrowUp { get; private set; }
+        public static Texture2D ArrowDown { get; private set; }
 
         public static Texture2D Panel { get; private set; }
         public static Texture2D Terminal { get; private set; }
@@ -36,12 +38,16 @@ namespace FormTest
         // Background Dark Grey: 40, 40, 40 
         public static Color ScrollThumb = new Color(104, 104, 104);
         public static Color ScrollBar = new Color(62, 62, 66);
+        public static Color ScrollThumbHover = new Color(158, 158, 158);
 
         public static void LoadContent(ContentManager content)
         {
             Button = content.Load<Texture2D>(@"UI/Button");
             ButtonHover = content.Load<Texture2D>(@"UI/ButtonHover");
             ButtonPressed = content.Load<Texture2D>(@"UI/ButtonPressed");
+
+            ArrowUp = content.Load<Texture2D>(@"UI/ArrowUp");
+            ArrowDown = content.Load<Texture2D>(@"UI/ArrowDown");
 
             Panel = content.Load<Texture2D>(@"UI/Panel");
             Terminal = content.Load<Texture2D>(@"UI/Terminal");

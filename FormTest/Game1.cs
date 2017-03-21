@@ -76,19 +76,23 @@ namespace FormTest
 
 
             // Control Manager - updates / draws all controls
-            manager = new ContentManager(GraphicsDevice, new AnchoredRectangle(0, 0, Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight));
+            manager = new ContentManager(
+                GraphicsDevice,
+                new AnchoredRectangle(
+                    0, 0,
+                    Graphics.PreferredBackBufferWidth,
+                    Graphics.PreferredBackBufferHeight
+                )
+            );
 
 
-            // Label:  will re-use the same FontStyle as buttons
-            Label myLabel = new Label("Here is a longer string of text to evaluate.", buttonStyle.FontStyle);
-            myLabel.MoveTo(new Vector2(200, 200));
-            manager.Add(myLabel);
 
 
             // Panel:
             ControlStyle panelStyle = new ControlStyle(Assets.Terminal);
             panelStyle.FontStyle = buttonStyle.FontStyle;
-            panelStyle.ScrollerStyle = new ScrollerStyle(Assets.ScrollBar, Assets.ScrollThumb);
+            panelStyle.ScrollerStyle = new ScrollerStyle(
+                Assets.ScrollBar, Assets.ScrollThumb, Assets.ScrollThumbHover);
             panelStyle.ScrollerStyle.ScrollThumbOffset = new Vector2(4, 0);
             panelStyle.ScrollerStyle.ScrollThumbWidth = 9;
             panelStyle.ScrollerStyle.ScrollBarWidth = 18;
@@ -105,12 +109,17 @@ namespace FormTest
             btn.AnchorTo(myPanel, PositionType.Inside_Top_Left, 10, 30, AnchorType.Bounds);
 
             Button btn2 = new Button("Button two", buttonStyle);
-            btn2.OnClicked += btn_click;
+            btn2.OnClicked += btn_click2;
             btn2.AnchorTo(btn, PositionType.Below_Center, 0, 300, AnchorType.Bounds);
 
+            // Label:  will re-use the same FontStyle as buttons
+            Label myLabel =
+                new Label("Here is a longer string of text to evaluate.", buttonStyle.FontStyle);
+            myLabel.AnchorTo(btn2, PositionType.Below_Left, 0, 300, AnchorType.Bounds);
 
             myPanel.ContentManager.Add(btn);
             myPanel.ContentManager.Add(btn2);
+            myPanel.ContentManager.Add(myLabel);
             manager.Add(myPanel);
 
 
@@ -137,9 +146,13 @@ namespace FormTest
         #region [ Button ]
         private void btn_click(object sender, EventArgs e)
         {
-            Console.WriteLine("click");
             var console = ServiceProvider.GetService<DevConsole>();
-            console.Write("Click", 1);
+            console.Write("Button One", 1);
+        }
+        private void btn_click2(object sender, EventArgs e)
+        {
+            var console = ServiceProvider.GetService<DevConsole>();
+            console.Write("Button Two", 1);
         }
         #endregion
 
@@ -167,8 +180,8 @@ namespace FormTest
 
             var console = ServiceProvider.GetService<DevConsole>();
 
-            console.Write("Panel ContentMgr Content Area Bounds: " + myPanel.ContentManager.ContentArea.Bounds.ToString());
-            console.Write("Panel Position: " + myPanel.Position.ToString());
+            //console.Write("Panel ContentMgr Content Area Bounds: " + myPanel.ContentManager.ContentArea.Bounds.ToString());
+            //console.Write("Panel Position: " + myPanel.Position.ToString());
             base.Update(gameTime);
         }
         #endregion

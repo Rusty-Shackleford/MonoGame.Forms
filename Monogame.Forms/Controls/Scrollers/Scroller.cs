@@ -40,11 +40,16 @@ namespace MonoGame.Forms.Controls.Scrollers
             ScrollThumb.MoveTo(new Vector2(ScrollBar.Position.X + _style.ScrollThumbOffset.X, ScrollBar.Position.Y));
             ScrollThumb.Width = _style.ScrollThumbWidth;
             ScrollThumb.UpdateHeight(ScrollBar, _ownerContents);
-
+            ScrollThumb.OnScrolled += Scroll;
             // USE CASES FOR UPDATING THE SCROLL THUMB HEIGHT HERE:
             _owner.ContentManager.OnItemAdded += UpdateThumbHeight;
             _owner.ContentManager.OnItemRemoved += UpdateThumbHeight;
 
+            if (_owner.ContentManager.Contents[0] != null)
+            {
+                _containerKeyItem = _owner.ContentManager.Contents[0];
+                _containerStartPosition = _containerKeyItem.Position;
+            }
             // Input Handlers
             var contents = new Contents();
             contents.Add(ScrollBar);
@@ -64,6 +69,8 @@ namespace MonoGame.Forms.Controls.Scrollers
         {
             get { return _owner.ContentManager.Contents; }
         }
+        private IContainable _containerKeyItem;
+        private Vector2 _containerStartPosition;
 
         private readonly ScrollerStyle _style;
         private InputHandler _input;
@@ -71,10 +78,8 @@ namespace MonoGame.Forms.Controls.Scrollers
         public ScrollBar ScrollBar { get; private set; }
         public ScrollThumb ScrollThumb { get; private set; }
 
-        public bool ScrollNeeded
-        {
-            get { return (_ownerContents.TotalHeight() > _owner.ContentManager.ContentArea.Height); }
-        }
+        public bool ScrollNeeded => (_ownerContents.TotalHeight() > _owner.ContentManager.ContentArea.Height);
+        public float ScrollHeight => ScrollBar.Height - ScrollThumb.Height; 
         #endregion
 
 
@@ -98,9 +103,13 @@ namespace MonoGame.Forms.Controls.Scrollers
 
 
         #region [ SCROLL ]
-        public void Scroll(float distance)
+        public void Scroll(object sender, ScrollArgs e)
         {
-
+            //TODO: -- NEXT UP -- fix this algo
+            Console.WriteLine("Move pct: " + e.DistanceChangedPct.ToString());
+            float distanceToTravel = (_ownerContents.TotalHeight() * e.DistanceChangedPct);
+            Console.WriteLine("Pixels To Move: " + distanceToTravel);
+            _containerKeyItem.Move(new Vector2(0, distanceToTravel * -1));
         }
         #endregion
 
@@ -108,7 +117,8 @@ namespace MonoGame.Forms.Controls.Scrollers
         #region [ Update ]
         public void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            var console = ServiceProvider.GetService<DevConsole>();
+            console.Write("Scroll Height: " + ScrollHeight);
         }
         #endregion
 
@@ -118,11 +128,15 @@ namespace MonoGame.Forms.Controls.Scrollers
         {
             if (ScrollBar != null)
             {
-                spriteBatch.Draw(_style.ScrollBarTexture, ScrollBar.Bounds, Color.White);
+                spriteBatch.Draw(_style.Pixel, ScrollBar.Bounds, _style.ScrollBar);
             }
             if (ScrollThumb != null)
             {
-                spriteBatch.Draw(_style.ScrollThumbTexture, ScrollThumb.Bounds, Color.White);
+                Color scrollThumb = _style.ScrollThumb;
+                if (ScrollThumb.Hovered || ScrollThumb.Pressed)
+                    scrollThumb = _style.ScrollThumbHover;
+
+                spriteBatch.Draw(_style.Pixel, ScrollThumb.Bounds, scrollThumb);
             }
         }
         #endregion

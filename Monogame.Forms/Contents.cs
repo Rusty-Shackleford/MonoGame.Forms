@@ -55,7 +55,7 @@ namespace MonoGame.Forms
         #region [ Queries ]
         public float TotalHeight()
         {
-            return Math.Abs(LowestItem().Bounds.Bottom - HighestItem().Bounds.Top);
+            return Math.Abs(LowestItem().Bounds.Y - HighestItem().Bounds.Top);
         }
 
         public float TotalWidth()

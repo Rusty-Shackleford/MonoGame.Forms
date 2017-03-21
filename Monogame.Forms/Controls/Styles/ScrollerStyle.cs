@@ -8,30 +8,21 @@ namespace MonoGame.Forms.Controls.Styles
     public class ScrollerStyle
     {
         #region [ Constructor ]
-        public ScrollerStyle(Color bar, Color thumb)
+        public ScrollerStyle(Color bar, Color thumb, Color hover)
         {
-            ScrollBarColor = bar;
-            ScrollThumbColor = thumb;
-
-            Texture2D pixel = new Texture2D(ServiceProvider.Graphics, 1, 1);
-            Color[] colorData = { ScrollBarColor };
-            pixel.SetData(colorData);
-
-            ScrollBarTexture = pixel;
-
-            pixel = new Texture2D(ServiceProvider.Graphics, 1, 1);
-            Color[] colorData2 = { ScrollThumbColor };
-            pixel.SetData(colorData2);
-            ScrollThumbTexture = pixel;
+            ScrollBar = bar;
+            ScrollThumb = thumb;
+            ScrollThumbHover = hover;
+            Pixel = Util.MakePixel(Color.White);
         }
         #endregion
 
 
         #region [ Members ]
-        public Color ScrollBarColor { get; private set; }
-        public Color ScrollThumbColor { get; private set; }
-        public Texture2D ScrollBarTexture { get; private set; }
-        public Texture2D ScrollThumbTexture { get; private set; }
+        public Color ScrollBar { get; private set; }
+        public Color ScrollThumb { get; private set; }
+        public Color ScrollThumbHover { get; private set; }
+        public Texture2D Pixel { get; private set; }
 
         public int ScrollBarWidth { get; set; }
         public Vector2 ScrollThumbOffset { get; set; }

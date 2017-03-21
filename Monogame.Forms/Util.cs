@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Forms.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,15 @@ namespace MonoGame.Forms
                 }
             }
             return colors2D;
+        }
+
+
+        public static Texture2D MakePixel(Color color)
+        {
+            Texture2D pixel = new Texture2D(ServiceProvider.Graphics, 1, 1);
+            Color[] colorData = { color };
+            pixel.SetData(colorData);
+            return pixel;
         }
     }
 }

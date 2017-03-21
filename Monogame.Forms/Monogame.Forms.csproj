@@ -63,6 +63,7 @@
     <Compile Include="Controls\DropDown.cs" />
     <Compile Include="Controls\DropDownItems.cs" />
     <Compile Include="Controls\Renderers\RenderInScissor.cs" />
+    <Compile Include="Controls\Scrollers\ScrollArgs.cs" />
     <Compile Include="IDisplayText.cs" />
     <Compile Include="IDraggable.cs" />
     <Compile Include="Controls\Label.cs" />
@@ -72,9 +73,9 @@
     <Compile Include="Controls\Renderers\TextRenderer.cs" />
     <Compile Include="Controls\Renderers\IRenderer.cs" />
     <Compile Include="Controls\ScrollBox.cs" />
-    <Compile Include="Controls\Scroller\ScrollBar.cs" />
-    <Compile Include="Controls\Scroller\Scroller.cs" />
-    <Compile Include="Controls\Scroller\ScrollThumb.cs" />
+    <Compile Include="Controls\Scrollers\ScrollBar.cs" />
+    <Compile Include="Controls\Scrollers\Scroller.cs" />
+    <Compile Include="Controls\Scrollers\ScrollThumb.cs" />
     <Compile Include="Controls\Styles\ControlStyle.cs" />
     <Compile Include="Controls\Styles\FontStyle.cs" />
     <Compile Include="Anchoring\IAnchorable.cs" />

@@ -10,7 +10,8 @@ using System;
 namespace MonoGame.Forms
 {
     /// <summary>
-    /// Updates, Draws, etc.  >> Has its own SpriteBatch
+    /// Responsible for Updating and Drawing contained items.
+    /// Handles input for all items it contains.
     /// </summary>
     public class ContentManager : IUpdate
     {
@@ -49,7 +50,7 @@ namespace MonoGame.Forms
             if (item != null)
             {
                 Contents.Add(item);
-                OnItemAdded?.Invoke(this, EventArgs.Empty);
+                OnItemAdded?.Invoke(item, EventArgs.Empty);
             }
         }
 
@@ -63,6 +64,7 @@ namespace MonoGame.Forms
             return false;
         }
         #endregion
+
 
         #region [ Unload ]
         public void UnloadContent()
