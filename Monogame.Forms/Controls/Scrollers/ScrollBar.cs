@@ -15,13 +15,7 @@ namespace MonoGame.Forms.Controls.Scrollers
         #region [ Constructor ]
         public ScrollBar() : base()
         {
-           // OnPositionChanged += testme;
-        }
 
-        private void testme(object sender, PositionChangedArgs e)
-        {
-            Console.WriteLine("");
-            Console.WriteLine("ScrollBar OnPositionChanged: " + e.DistanceMoved.ToString());
         }
         #endregion
 

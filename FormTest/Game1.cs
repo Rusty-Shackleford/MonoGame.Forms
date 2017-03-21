@@ -91,11 +91,8 @@ namespace FormTest
             // Panel:
             ControlStyle panelStyle = new ControlStyle(Assets.Terminal);
             panelStyle.FontStyle = buttonStyle.FontStyle;
-            panelStyle.ScrollerStyle = new ScrollerStyle(
-                Assets.ScrollBar, Assets.ScrollThumb, Assets.ScrollThumbHover);
-            panelStyle.ScrollerStyle.ScrollThumbOffset = new Vector2(4, 0);
-            panelStyle.ScrollerStyle.ScrollThumbWidth = 9;
-            panelStyle.ScrollerStyle.ScrollBarWidth = 18;
+            panelStyle.ScrollerStyle = Assets.ScrollerStyle;
+
 
             myPanel = new Panel("test", panelStyle, true, true);
             myPanel.MoveTo(new Vector2(200, 350));

@@ -28,6 +28,8 @@ namespace MonoGame.Forms.Controls.Styles
         public Vector2 ScrollThumbOffset { get; set; }
         public int ScrollThumbWidth { get; set; }
 
+        public ControlStyle ScrollUpButtonStyle { get; set; }
+        public ControlStyle ScrollDownButtonStyle { get; set; }
         // TODO: Implement ScrollBar Offset / buttons
         // public Vector2 ScrollBarOffset { get; set; }
         #endregion

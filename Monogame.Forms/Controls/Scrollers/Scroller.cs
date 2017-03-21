@@ -105,10 +105,7 @@ namespace MonoGame.Forms.Controls.Scrollers
         #region [ SCROLL ]
         public void Scroll(object sender, ScrollArgs e)
         {
-            //TODO: -- NEXT UP -- fix this algo
-            Console.WriteLine("Move pct: " + e.DistanceChangedPct.ToString());
             float distanceToTravel = (_ownerContents.TotalHeight() * e.DistanceChangedPct);
-            Console.WriteLine("Pixels To Move: " + distanceToTravel);
             _containerKeyItem.Move(new Vector2(0, distanceToTravel * -1));
         }
         #endregion
@@ -118,7 +115,6 @@ namespace MonoGame.Forms.Controls.Scrollers
         public void Update(GameTime gameTime)
         {
             var console = ServiceProvider.GetService<DevConsole>();
-            console.Write("Scroll Height: " + ScrollHeight);
         }
         #endregion
 
