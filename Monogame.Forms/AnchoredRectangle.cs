@@ -106,7 +106,7 @@ namespace MonoGame.Forms
             if (target != (IAnchorable)this)
             {
                 RemoveAnchor();
-                _anchor = new AnchorComponent(target, this, anchorType, style, new MonoGame.Extended.Size(offsetX, offsetY));
+                _anchor = new AnchorComponent(target, this, anchorType, style, new MonoGame.Extended.Size2(offsetX, offsetY));
                 return;
             }
             Console.WriteLine("WARNING: Attempted to anchor this object to itself.");

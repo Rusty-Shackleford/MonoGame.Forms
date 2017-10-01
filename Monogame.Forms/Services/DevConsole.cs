@@ -2,14 +2,13 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
-using MonoGame.Extended.InputListeners;
 using MonoGame.Forms.Controls;
 using MonoGame.Forms.Controls.Styles;
 using System;
 using MonoGame.Extended.BitmapFonts;
 using System.Collections.Generic;
 using MonoGame.Extended.Timers;
-
+using MonoGame.Extended.Input.InputListeners;
 
 namespace MonoGame.Forms.Services
 {
@@ -72,7 +71,7 @@ namespace MonoGame.Forms.Services
                 string[] lines = _text.Split('\n');
                 for (int i = 0; i < lines.Length; i++)
                 {
-                    y += (int)Panel.Style.FontStyle.Font.MeasureString(lines[i]).Y;
+                    y += (int)Panel.Style.FontStyle.Font.MeasureString(lines[i]).Height;
                 }
                 return y;
             }
@@ -80,7 +79,7 @@ namespace MonoGame.Forms.Services
 
 
         private SpriteBatch _sb;
-        private readonly KeyboardListener kbd = ServiceProvider.GetService<KeyboardListener>();
+        private readonly KeyboardListener kbd = KVM.Keyboard;
         private List<ConsoleMessage> _messages;
         #endregion
 

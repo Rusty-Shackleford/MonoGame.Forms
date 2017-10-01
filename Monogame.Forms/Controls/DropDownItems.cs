@@ -18,7 +18,7 @@ namespace MonoGame.Forms.Controls
 
             // Determine backcolor on image:
 
-            var gfx = ServiceProvider.Graphics;
+            var gfx = KVM.Graphics;
             _px = new Texture2D(gfx, 1, 1);
             Color[] colorData = { Color.White };
             _px.SetData<Color>(colorData);
@@ -44,7 +44,7 @@ namespace MonoGame.Forms.Controls
         private int CalculateItemHeight()
         {
             string testString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-            return (int)Math.Ceiling(_owner.Style.FontStyle.Font.MeasureString(testString).Y);
+            return (int)Math.Ceiling(_owner.Style.FontStyle.Font.MeasureString(testString).Height);
         }
 
 

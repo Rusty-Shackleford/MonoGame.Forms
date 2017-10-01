@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.InputListeners;
 using MonoGame.Forms.Anchoring;
 using MonoGame.Forms.Controls.Styles;
 using MonoGame.Forms.Services;

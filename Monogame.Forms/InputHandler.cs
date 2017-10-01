@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.InputListeners;
+using MonoGame.Extended.Input;
+using MonoGame.Extended.Input.InputListeners;
 using MonoGame.Forms.Services;
 using System.Collections.Generic;
 
@@ -28,7 +29,7 @@ namespace MonoGame.Forms
 
         #region [ Members ]
         public Contents Contents { get; protected set; }
-        private readonly MouseListener _mouse = ServiceProvider.GetService<MouseListener>();
+        private readonly MouseListener _mouse = KVM.Mouse;
 
         private IInteractive _hoveredItem { get; set; }
         private IInteractive _pressedItem { get; set; }

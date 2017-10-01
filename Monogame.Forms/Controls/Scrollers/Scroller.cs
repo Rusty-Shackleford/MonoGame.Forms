@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.InputListeners;
+using MonoGame.Extended.Input.InputListeners;
 using MonoGame.Forms.Anchoring;
 using MonoGame.Forms.Controls.Styles;
 using MonoGame.Forms.Services;
@@ -82,7 +82,7 @@ namespace MonoGame.Forms.Controls.Scrollers
 
         #region [ Members ]
         public bool Initialized { get; private set; }
-        private readonly MouseListener _mouse = ServiceProvider.GetService<MouseListener>();
+        private readonly MouseListener _mouse = KVM.Mouse;
         private readonly IScroll _owner;
         private Contents _ownerContents
         {
@@ -169,7 +169,7 @@ namespace MonoGame.Forms.Controls.Scrollers
         #region [ Update ]
         public void Update(GameTime gameTime)
         {
-            var console = ServiceProvider.GetService<DevConsole>();
+           // var console = ServiceProvider.GetService<DevConsole>();
         }
         #endregion
 

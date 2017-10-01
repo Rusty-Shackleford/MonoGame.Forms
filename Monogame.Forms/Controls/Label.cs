@@ -61,7 +61,7 @@ namespace MonoGame.Forms.Controls
             get
             {
                 var size = FontStyle.Font.MeasureString(Text);
-                return new Rectangle((int)Position.X, (int)Position.Y, (int)size.X, (int)size.Y);
+                return new Rectangle((int)Position.X, (int)Position.Y, (int)size.Width, (int)size.Height);
             }
         }
 

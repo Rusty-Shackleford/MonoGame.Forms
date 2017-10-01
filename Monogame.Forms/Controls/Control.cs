@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.InputListeners;
+using MonoGame.Extended.Input.InputListeners;
 using MonoGame.Forms.Anchoring;
 using MonoGame.Forms.Controls.Styles;
 using System;
@@ -29,7 +29,7 @@ namespace MonoGame.Forms.Controls
         public void AnchorTo(IAnchorable target, PositionType style, int offsetX = 0, int offsetY = 0, AnchorType anchorType = AnchorType.Bounds)
         {
             RemoveAnchor();
-            _anchor = new AnchorComponent(target, this, anchorType, style, new MonoGame.Extended.Size(offsetX, offsetY));
+            _anchor = new AnchorComponent(target, this, anchorType, style, new MonoGame.Extended.Size2(offsetX, offsetY));
         }
         public void RemoveAnchor()
         {

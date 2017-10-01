@@ -1,4 +1,5 @@
-﻿using MonoGame.Extended.InputListeners;
+﻿
+using MonoGame.Extended.Input.InputListeners;
 using MonoGame.Forms.Services;
 
 
@@ -17,6 +18,7 @@ namespace MonoGame.Forms
             base(contentManager.Contents)
         {
             _contentManager = contentManager;
+            _mouse = KVM.Mouse;
         }
         #endregion
 
@@ -24,7 +26,7 @@ namespace MonoGame.Forms
         #region [ Members ]
         private readonly ContentManager _contentManager;
 
-        private readonly MouseListener _mouse = ServiceProvider.GetService<MouseListener>();
+        private readonly MouseListener _mouse;
         private IInteractive _hoveredItem { get; set; }
         private IInteractive _pressedItem { get; set; }
         private IDraggable _movingItem { get; set; }
@@ -37,8 +39,6 @@ namespace MonoGame.Forms
 
 
         #region [ Movement ]
-
-
         protected override void MoveStart(object sender, MouseEventArgs e)
         {
             if (_contentManager.ContentArea.Contains(e.Position))

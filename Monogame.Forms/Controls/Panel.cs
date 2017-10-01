@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.InputListeners;
+using MonoGame.Extended.Input.InputListeners;
 using MonoGame.Forms.Anchoring;
 using MonoGame.Forms.Controls.Renderers;
 using MonoGame.Forms.Controls.Scrollers;
@@ -39,13 +39,13 @@ namespace MonoGame.Forms.Controls
             if (!string.IsNullOrEmpty(title))
             {
                 label = new Label(title, Style.FontStyle);
-                label.AnchorTo(this, Anchoring.PositionType.Inside_Top_Left, 3, 8, Anchoring.AnchorType.Bounds);
+                label.AnchorTo(this, PositionType.Inside_Top_Left, 3, 8, Anchoring.AnchorType.Bounds);
             }
 
             render = new ControlRenderer(this);
 
             AnchorToArgs arg = new AnchorToArgs(this, PositionType.Inside_Top_Left, 0, 0, AnchorType.Bounds);
-            ContentManager = new ContentManager(ServiceProvider.Graphics, new AnchoredRectangle(Rectangle.Empty, arg));
+            ContentManager = new ContentManager(KVM.Graphics, new AnchoredRectangle(Rectangle.Empty, arg));
 
 
             if (scrolls)
@@ -56,9 +56,8 @@ namespace MonoGame.Forms.Controls
                 }
                 Scrolls = true;
                 scroller = new Scroller(this);
-                _contentsRenderer = new RenderInScissor(ServiceProvider.Graphics);
+                _contentsRenderer = new RenderInScissor(KVM.Graphics);
             }
-
         }
         #endregion
 

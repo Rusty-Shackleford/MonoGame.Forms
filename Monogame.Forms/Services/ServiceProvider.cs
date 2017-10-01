@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.InputListeners;
+using MonoGame.Extended.Input.InputListeners;
 using System;
 using System.Collections.Generic;
 
@@ -15,18 +15,16 @@ namespace MonoGame.Forms.Services
             _game = gameInstance;
             Graphics = _game.GraphicsDevice;
             services = new Dictionary<Type, object>();
-            Initialized = true;
 
-            _inputManager = new InputListenerManager();
-            var mouseListener = _inputManager.AddListener(new MouseListenerSettings());
-            var keyboardListener = _inputManager.AddListener(new KeyboardListenerSettings());
+            var mouseListener = new MouseListener(new MouseListenerSettings());
+            var keyboardListener = new KeyboardListener(new KeyboardListenerSettings());
+            _game.Components.Add(new InputListenerComponent(_game, mouseListener, keyboardListener));
 
-            AddService(mouseListener);
-            AddService(keyboardListener);
-            AddService(_inputManager);
             //AddService(new TextureMaker(Graphics));
             //AddService(new MouseCursor());
-            AddService(new GameViewport());
+            _game.Components.Add(new GameViewport(_game));
+
+            Initialized = true;
         }
         #endregion
 
@@ -62,7 +60,7 @@ namespace MonoGame.Forms.Services
         {
             foreach (var service in services)
             {
-                var serviceReference = service.Value as MonoGame.Extended.IDraw;
+                var serviceReference = service.Value as IDraw;
                 if (serviceReference != null)
                 {
                     serviceReference.Draw(gameTime);

@@ -30,7 +30,7 @@ namespace MonoGame.Forms
 
         public static Texture2D MakePixel(Color color)
         {
-            Texture2D pixel = new Texture2D(ServiceProvider.Graphics, 1, 1);
+            Texture2D pixel = new Texture2D(KVM.Graphics, 1, 1);
             Color[] colorData = { color };
             pixel.SetData(colorData);
             return pixel;

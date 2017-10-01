@@ -4,12 +4,12 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 namespace MonoGame.Forms.Services
 {
-    public class MouseCursor : IUpdate, IDraw
+    public class Cursor : GameComponent, IUpdate, IDraw
     {
         #region [ Constructor ]
-        public MouseCursor(GraphicsDevice graphics)
+        public Cursor(Game game) : base(game)
         {
-            _spriteBatch = new SpriteBatch(graphics);
+            _spriteBatch = new SpriteBatch(game.GraphicsDevice);
             Visible = false;
             Enabled = true;
         }
@@ -52,7 +52,6 @@ namespace MonoGame.Forms.Services
         public Vector2 Position { get { return _position; } }
         private SpriteBatch _spriteBatch;
         public bool Visible { get; set; }
-        public bool Enabled { get; set; }
         public byte Alpha = 255;
 
         Color _color
@@ -62,8 +61,9 @@ namespace MonoGame.Forms.Services
 
 
         #region [ Update ]
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
             if (Enabled)
             {
                 var currentMouseState = Mouse.GetState();

@@ -5,13 +5,13 @@ using MonoGame.Extended;
 
 namespace MonoGame.Forms.Services
 {
-    public class GameViewport : IAnchorable, IUpdate
+    public class GameViewport : GameComponent, IAnchorable, IUpdate
     {
         #region [ Constructor ]
-        public GameViewport()
+        public GameViewport(Game game) : base(game)
         {
-            Width = ServiceProvider.Graphics.Viewport.Width;
-            Height = ServiceProvider.Graphics.Viewport.Height;
+            Width = KVM.Graphics.Viewport.Width;
+            Height = KVM.Graphics.Viewport.Height;
         }
         #endregion
 
@@ -82,10 +82,11 @@ namespace MonoGame.Forms.Services
 
 
         #region [ Method: Update ]
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
-            Width = ServiceProvider.Graphics.Viewport.Width;
-            Height = ServiceProvider.Graphics.Viewport.Height;
+            base.Update(gameTime);
+            Width = KVM.Graphics.Viewport.Width;
+            Height = KVM.Graphics.Viewport.Height;
         }
 
         public void AnchorTo(IAnchorable target, PositionType style, int offsetX = 0, int offsetY = 0, AnchorType anchorType = AnchorType.Bounds)

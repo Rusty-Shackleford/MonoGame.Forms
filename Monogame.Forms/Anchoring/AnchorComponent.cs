@@ -1,12 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended;
+using MonoGame.Extended.Input;
 using System;
 
 namespace MonoGame.Forms.Anchoring
 {
     public class AnchorComponent
     {
-        public AnchorComponent(IAnchorable target, IAnchorable owner, AnchorType anchorType, PositionType positionType, Size offset)
+        public AnchorComponent(IAnchorable target, IAnchorable owner, AnchorType anchorType, PositionType positionType, Size2 offset)
         {
             _target = target;
             _owner = owner;
@@ -33,8 +34,8 @@ namespace MonoGame.Forms.Anchoring
             get { return _anchorType; }
         }
 
-        private Size _anchorOffset;
-        public Size AnchorOffset
+        private Size2 _anchorOffset;
+        public Size2 AnchorOffset
         {
             get { return _anchorOffset; }
         }

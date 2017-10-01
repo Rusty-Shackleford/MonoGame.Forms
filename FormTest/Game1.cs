@@ -25,7 +25,6 @@ namespace FormTest
         public readonly int ScreenHeightStart = 720;
 
         Panel myPanel;
-
         #endregion
 
 
@@ -59,6 +58,7 @@ namespace FormTest
         #region [ Load Content ]
         protected override void LoadContent()
         {
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Load Assets
@@ -101,7 +101,7 @@ namespace FormTest
 
 
             // Button:
-            Button btn = new Button("DO NOT PUSH", buttonStyle);
+            Button btn = new Button("Connect", buttonStyle);
             btn.OnClicked += btn_click;
             btn.AnchorTo(myPanel, PositionType.Inside_Top_Left, 10, 30, AnchorType.Bounds);
 
@@ -110,24 +110,14 @@ namespace FormTest
                 new Label("Scroll Down vv", buttonStyle.FontStyle);
             myLabel1.AnchorTo(btn, PositionType.Below_Left, 0, 50, AnchorType.Bounds);
 
-            Button btn2 = new Button("Button two", buttonStyle);
-            btn2.OnClicked += btn_click2;
-            btn2.AnchorTo(btn, PositionType.Below_Center, 0, 300, AnchorType.Bounds);
-
-            // Label:  will re-use the same FontStyle as buttons
-            Label myLabel =
-                new Label("Here is a longer string of text to evaluate.", buttonStyle.FontStyle);
-            myLabel.AnchorTo(btn2, PositionType.Below_Left, 0, 300, AnchorType.Bounds);
 
             myPanel.ContentManager.Add(btn);
             myPanel.ContentManager.Add(myLabel1);
-            myPanel.ContentManager.Add(btn2);
-            myPanel.ContentManager.Add(myLabel);
             manager.Add(myPanel);
 
 
             // FPS Counter:
-            ServiceProvider.AddService(new FramesPerSecondCounter(100));
+           // ServiceProvider.AddService(new FramesPerSecondCounter(100));
 
             // Dev Console
             ControlStyle styleDevConsole = new ControlStyle(Assets.DevConsole);
@@ -139,8 +129,8 @@ namespace FormTest
             ServiceProvider.AddService(console);
 
             // Cursor - note this needs to be added last
-            ServiceProvider.AddService(new MouseCursor(GraphicsDevice));
-            ServiceProvider.GetService<MouseCursor>().SetCursor(Assets.Cursor);
+            ServiceProvider.AddService(new Cursor(GraphicsDevice));
+            ServiceProvider.GetService<Cursor>().SetCursor(Assets.Cursor);
 
         }
         #endregion
@@ -149,13 +139,6 @@ namespace FormTest
         #region [ Button ]
         private void btn_click(object sender, EventArgs e)
         {
-            var console = ServiceProvider.GetService<DevConsole>();
-            console.Write("Button One", 1);
-        }
-        private void btn_click2(object sender, EventArgs e)
-        {
-            var console = ServiceProvider.GetService<DevConsole>();
-            console.Write("Button Two", 1);
         }
         #endregion
 
@@ -172,8 +155,8 @@ namespace FormTest
                 Exit();
 
             // Write FPS to console
-            string fps = ServiceProvider.GetService<FramesPerSecondCounter>().CurrentFramesPerSecond.ToString();
-            ServiceProvider.GetService<DevConsole>().Write("FPS:  " + fps);
+           // string fps = ServiceProvider.GetService<FramesPerSecondCounter>().CurrentFramesPerSecond.ToString();
+          //  ServiceProvider.GetService<DevConsole>().Write("FPS:  " + fps);
 
             // Service Provider
             ServiceProvider.Update(gameTime);
