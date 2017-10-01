@@ -55,7 +55,7 @@ namespace MonoGame.Forms.Services
         public byte Alpha = 255;
         Color _color
         {
-            get { return new Color(255, 255, 255, Alpha); }
+            get { return new Color((byte)255, (byte)255, (byte)255, Alpha); }
         }
 
         private SpriteBatch _spriteBatch;

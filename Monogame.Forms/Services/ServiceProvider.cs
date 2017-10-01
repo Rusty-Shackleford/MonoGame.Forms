@@ -134,6 +134,8 @@ namespace MonoGame.Forms.Services
         }
         #endregion
 
+
+        #region [ IsAssignableFrom ]
         /// <summary>
         /// Returns true if the given type can be assigned the given value
         /// </summary>
@@ -161,5 +163,7 @@ namespace MonoGame.Forms.Services
                 return true;
             return false;
         }
+        #endregion
+
     }
 }
