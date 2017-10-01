@@ -18,7 +18,12 @@ namespace MonoGame.Forms.Services
 
             var mouseListener = new MouseListener(new MouseListenerSettings());
             var keyboardListener = new KeyboardListener(new KeyboardListenerSettings());
+
+
             _game.Components.Add(new InputListenerComponent(_game, mouseListener, keyboardListener));
+            // TODO: This is where KVM is loaded... ?
+            KVM.Load(keyboardListener, mouseListener, _game);
+
 
             //AddService(new TextureMaker(Graphics));
             //AddService(new MouseCursor());

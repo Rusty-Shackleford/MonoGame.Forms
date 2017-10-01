@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// NOTE: I am not sure if this class needs to exist at this time, or
+// if KVM will just be accessed via ServiceProvider itself.
 namespace MonoGame.Forms.Services
 {
     public static class KVM

@@ -10,8 +10,8 @@ namespace MonoGame.Forms.Services
         #region [ Constructor ]
         public GameViewport(Game game) : base(game)
         {
-            Width = KVM.Graphics.Viewport.Width;
-            Height = KVM.Graphics.Viewport.Height;
+            Width = game.GraphicsDevice.Viewport.Width;
+            Height = game.GraphicsDevice.Viewport.Height;
         }
         #endregion
 

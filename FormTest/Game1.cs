@@ -49,7 +49,6 @@ namespace FormTest
 
             // Service Provider
             ServiceProvider.Initialize(this);
-
             base.Initialize();
         }
         #endregion
@@ -72,7 +71,7 @@ namespace FormTest
                 null,
                 Rectangle.Empty
                 );
-            buttonStyle.FontStyle = new FontStyle(Assets.Font_Plumbis11, Color.White);
+            buttonStyle.FontStyle = new FontStyle(Assets.Font_MineCraftia12, Color.White);
 
 
             // Control Manager - updates / draws all controls
