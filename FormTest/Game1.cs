@@ -72,7 +72,7 @@ namespace FormTest
                 null,
                 Rectangle.Empty
                 );
-            buttonStyle.FontStyle = new FontStyle(Assets.Plumbis11, Color.White);
+            buttonStyle.FontStyle = new FontStyle(Assets.Font_Plumbis11, Color.White);
 
 
             // Control Manager - updates / draws all controls
@@ -89,7 +89,7 @@ namespace FormTest
 
 
             // Panel:
-            ControlStyle panelStyle = new ControlStyle(Assets.Terminal);
+            ControlStyle panelStyle = new ControlStyle(Assets.Terminal_Bg);
             panelStyle.FontStyle = buttonStyle.FontStyle;
             panelStyle.ScrollerStyle = Assets.ScrollerStyle;
 
@@ -120,7 +120,7 @@ namespace FormTest
            // ServiceProvider.AddService(new FramesPerSecondCounter(100));
 
             // Dev Console
-            ControlStyle styleDevConsole = new ControlStyle(Assets.DevConsole);
+            ControlStyle styleDevConsole = new ControlStyle(Assets.DevConsole_Bg);
             styleDevConsole.FontStyle = buttonStyle.FontStyle;
 
             var console = new DevConsole(GraphicsDevice, Keys.OemTilde, new Panel("DevConsole", styleDevConsole));
@@ -129,7 +129,7 @@ namespace FormTest
             ServiceProvider.AddService(console);
 
             // Cursor - note this needs to be added last
-            ServiceProvider.AddService(new Cursor(GraphicsDevice));
+            ServiceProvider.AddService(new Cursor(this));
             ServiceProvider.GetService<Cursor>().SetCursor(Assets.Cursor);
 
         }
@@ -151,12 +151,16 @@ namespace FormTest
         #region [ Update ]
         protected override void Update(GameTime gameTime)
         {
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
                 Exit();
+            }
+
 
             // Write FPS to console
-           // string fps = ServiceProvider.GetService<FramesPerSecondCounter>().CurrentFramesPerSecond.ToString();
-          //  ServiceProvider.GetService<DevConsole>().Write("FPS:  " + fps);
+            // string fps = ServiceProvider.GetService<FramesPerSecondCounter>().CurrentFramesPerSecond.ToString();
+            //  ServiceProvider.GetService<DevConsole>().Write("FPS:  " + fps);
 
             // Service Provider
             ServiceProvider.Update(gameTime);

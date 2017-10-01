@@ -14,7 +14,7 @@ namespace MonoGame.Forms.Services
 {
     public class DevConsole : IUpdate, IDraw
     {
-        #region [ ConsoleMessage ]
+        #region [ +Class: ConsoleMessage ]
         protected class ConsoleMessage
         {
             private BitmapFont Font { get; set; }
@@ -52,6 +52,17 @@ namespace MonoGame.Forms.Services
         #endregion
 
 
+        #region [ Events ]
+        private void toggle(object sender, KeyboardEventArgs e)
+        {
+            if (e.Key == _key)
+            {
+                Visible = !Visible;
+            }
+        }
+        #endregion
+
+
         #region [ Members ]
         public bool Visible { get; set; }
         public Vector2 Position { get; set; }
@@ -84,6 +95,7 @@ namespace MonoGame.Forms.Services
         #endregion
 
 
+        #region [ WRITE ]
         public void Write(string message)
         {
             if (!string.IsNullOrEmpty(message))
@@ -101,14 +113,7 @@ namespace MonoGame.Forms.Services
                 _messages.Add(consolemessage);
             }
         }
-
-        private void toggle(object sender, KeyboardEventArgs e)
-        {
-            if (e.Key == _key)
-            {
-                Visible = !Visible;
-            }
-        }
+        #endregion
 
 
         #region [ Update ]

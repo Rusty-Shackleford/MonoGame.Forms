@@ -16,6 +16,8 @@ namespace MonoGame.Forms.Services
         #endregion
 
 
+        #region [ Members ]
+
         #region [ Field: Cursor ]
         private Texture2D _texture;
 
@@ -47,17 +49,17 @@ namespace MonoGame.Forms.Services
         }
         #endregion
 
-
         private Vector2 _position;
         public Vector2 Position { get { return _position; } }
-        private SpriteBatch _spriteBatch;
         public bool Visible { get; set; }
         public byte Alpha = 255;
-
         Color _color
         {
             get { return new Color(255, 255, 255, Alpha); }
         }
+
+        private SpriteBatch _spriteBatch;
+        #endregion
 
 
         #region [ Update ]

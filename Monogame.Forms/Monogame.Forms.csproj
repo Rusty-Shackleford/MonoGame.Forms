@@ -102,6 +102,7 @@
     <Compile Include="Services\Cursor.cs" />
     <Compile Include="Services\InputListenerManager.cs" />
     <Compile Include="Services\KVM.cs" />
+    <Compile Include="Services\ServiceProvider.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>

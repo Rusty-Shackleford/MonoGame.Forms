@@ -39,20 +39,20 @@ namespace FormTest
 
 
         #region [ Misc. ]
-        public static Texture2D Panel { get; private set; }
-        public static Texture2D Terminal { get; private set; }
+        public static Texture2D Panel_Bg { get; private set; }
+        public static Texture2D Terminal_Bg { get; private set; }
         public static Texture2D Cursor { get; private set; }
-        public static Texture2D DevConsole { get; private set; }
+        public static Texture2D DevConsole_Bg { get; private set; }
         #endregion
 
 
         #region [ Fonts ]
-        public static BitmapFont Crux12 { get; private set; }
-        public static BitmapFont MineCraftia12 { get; private set; }
-        public static BitmapFont MineCraftia10 { get; private set; }
-        public static BitmapFont SteelFlight8 { get; private set; }
-        public static BitmapFont SteelFlight16 { get; private set; }
-        public static BitmapFont Plumbis11 { get; private set; }
+        public static BitmapFont Font_Crux12 { get; private set; }
+        public static BitmapFont Font_MineCraftia12 { get; private set; }
+        public static BitmapFont Font_MineCraftia10 { get; private set; }
+        public static BitmapFont Font_SteelFlight8 { get; private set; }
+        public static BitmapFont Font_SteelFlight16 { get; private set; }
+        public static BitmapFont Font_Plumbis11 { get; private set; }
         #endregion
 
 
@@ -90,17 +90,19 @@ namespace FormTest
             };
 
 
-            Panel = content.Load<Texture2D>(@"UI/Panel");
-            Terminal = content.Load<Texture2D>(@"UI/Terminal");
+            Panel_Bg = content.Load<Texture2D>(@"UI/Panel");
+            Terminal_Bg = content.Load<Texture2D>(@"UI/Terminal");
             Cursor = content.Load<Texture2D>(@"UI/Cursor");
-            DevConsole = content.Load<Texture2D>(@"UI/DevConsole");
+            DevConsole_Bg = content.Load<Texture2D>(@"UI/DevConsole");
 
-            Crux12 = content.Load<BitmapFont>(@"Fonts/CoderCrux_12");
-            MineCraftia12 = content.Load<BitmapFont>(@"Fonts/MineCraftia_12");
-            MineCraftia10 = content.Load<BitmapFont>(@"Fonts/MineCraftia_10");
-            SteelFlight8 = content.Load<BitmapFont>(@"Fonts/SteelFlight_8");
-            SteelFlight16 = content.Load<BitmapFont>(@"Fonts/SteelFlight_16");
-            Plumbis11 = content.Load<BitmapFont>(@"Fonts/Plumbis_11");
+
+            Font_MineCraftia12 = content.Load<BitmapFont>(@"Fonts/MineCraftia_12");
+
+            //Font_Crux12 = content.Load<BitmapFont>(@"Fonts/CoderCrux_12");
+            //Font_MineCraftia10 = content.Load<BitmapFont>(@"Fonts/MineCraftia_10");
+            //Font_SteelFlight8 = content.Load<BitmapFont>(@"Fonts/SteelFlight_8");
+            //Font_SteelFlight16 = content.Load<BitmapFont>(@"Fonts/SteelFlight_16");
+            //Font_Plumbis11 = content.Load<BitmapFont>(@"Fonts/Plumbis_11");
         }
 
     }
