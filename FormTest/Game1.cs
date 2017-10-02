@@ -20,7 +20,7 @@ namespace FormTest
         #region [ Members ]
         public GraphicsDeviceManager Graphics;
         SpriteBatch spriteBatch;
-        ContentManager manager;
+        ContentManager WindowContentManager;
         public readonly int ScreenWidthStart = 1280;
         public readonly int ScreenHeightStart = 720;
 
@@ -75,7 +75,7 @@ namespace FormTest
 
 
             // Control Manager - updates / draws all controls
-            manager = new ContentManager(
+            WindowContentManager = new ContentManager(
                 GraphicsDevice,
                 new AnchoredRectangle(
                     0, 0,
@@ -85,38 +85,37 @@ namespace FormTest
             );
 
 
-
-
             // Panel:
             ControlStyle panelStyle = new ControlStyle(Assets.Terminal_Bg);
             panelStyle.FontStyle = buttonStyle.FontStyle;
             panelStyle.ScrollerStyle = Assets.ScrollerStyle;
 
 
-            myPanel = new Panel("test", panelStyle, true, true);
+            myPanel = new Panel("Test Window", panelStyle, true, true);
             myPanel.MoveTo(new Vector2(200, 350));
             myPanel.DragAreaOffset = new Rectangle(0, 0, myPanel.Width, 23);
             myPanel.SetContentArea(10, 20, myPanel.Width - 10, myPanel.Height - 20);
 
 
             // Button:
-            Button btn = new Button("Connect", buttonStyle);
+            Button btn = new Button("Click Me", buttonStyle);
             btn.OnClicked += btn_click;
             btn.AnchorTo(myPanel, PositionType.Inside_Top_Left, 10, 30, AnchorType.Bounds);
 
             // Label:  will re-use the same FontStyle as buttons
             Label myLabel1 =
-                new Label("Scroll Down vv", buttonStyle.FontStyle);
+                new Label("Scroll Down?", buttonStyle.FontStyle);
             myLabel1.AnchorTo(btn, PositionType.Below_Left, 0, 50, AnchorType.Bounds);
 
             Label myLabel2 =
-                new Label("Scroll End", buttonStyle.FontStyle);
-            myLabel2.AnchorTo(myLabel1, PositionType.Below_Center, 0, 150, AnchorType.Bounds);
+                new Label("-- That's All Folks! --", buttonStyle.FontStyle);
+            myLabel2.AnchorTo(myLabel1, PositionType.Below_Left, 0, 150, AnchorType.Bounds);
 
             myPanel.ContentManager.Add(btn);
             myPanel.ContentManager.Add(myLabel1);
             myPanel.ContentManager.Add(myLabel2);
-            manager.Add(myPanel);
+
+            WindowContentManager.Add(myPanel);      // Important :)
 
 
             // FPS Counter:
@@ -169,7 +168,7 @@ namespace FormTest
             ServiceProvider.Update(gameTime);
 
             // UPDATE CONTROL MANAGER
-            manager.Update(gameTime);
+            WindowContentManager.Update(gameTime);
 
             var console = ServiceProvider.GetService<DevConsole>();
 
@@ -190,7 +189,7 @@ namespace FormTest
             GraphicsDevice.Clear(new Color(30, 30, 30));
 
             // DRAW CONTROL MANAGER
-            manager.Draw();
+            WindowContentManager.Draw();
 
             // Service Provider:  Last so that mouse on top:
             ServiceProvider.Draw(gameTime);
