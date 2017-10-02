@@ -91,6 +91,7 @@ namespace MonoGame.Forms.Controls
 
 
         #region [ Event Handling ]
+        //TODO: Wheel Scrolling
         //public override Vector2 Move(MouseEventArgs e)
         //{
         //    scroller.ScrollThumb.Move(e);
@@ -155,8 +156,10 @@ namespace MonoGame.Forms.Controls
                 if (Scrolls)
                 {
                     scroller.Draw(spriteBatch);
+                    // -- Draw in Scissor Rectangle -- //
                     spriteBatch.End();
                     _contentsRenderer.Draw(ContentManager);
+                    // -- Resume Master Sprite Batch
                     spriteBatch.Begin();
                 }
                 else

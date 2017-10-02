@@ -13,6 +13,11 @@ namespace MonoGame.Forms.Controls
     {
 
         #region [ Constructor ]
+        /// <summary>
+        /// [ CURRENTLY UNUSED ] ScrollBox is the virtual window mask in which the contents of a 
+        /// container are displayed via a Scissor Rectangle.
+        /// </summary>
+        /// <param name="style"></param>
         public ScrollBox(ControlStyle style) : base()
         {
             if (style == null)

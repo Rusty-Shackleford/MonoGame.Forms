@@ -100,7 +100,7 @@ namespace MonoGame.Forms.Controls.Scrollers
         public Button ScrollUpBtn { get; set; }
         public bool HasButtons { get; private set; }
 
-        public bool ScrollNeeded => (_ownerContents.TotalHeight() > _owner.ContentManager.ContentArea.Height);
+        public bool ScrollNeeded => (_ownerContents.CalcTotalHeight() > _owner.ContentManager.ContentArea.Height);
 
         public float ScrollHeight
         {
@@ -160,7 +160,7 @@ namespace MonoGame.Forms.Controls.Scrollers
         #region [ SCROLL ]
         public void Scroll(object sender, ScrollArgs e)
         {
-            float distanceToTravel = (_ownerContents.TotalHeight() * e.DistanceChangedPct);
+            float distanceToTravel = (_ownerContents.CalcTotalHeight() * e.DistanceChangedPct);
             _containerKeyItem.Move(new Vector2(0, distanceToTravel * -1));
         }
         #endregion
@@ -187,13 +187,18 @@ namespace MonoGame.Forms.Controls.Scrollers
                 ScrollUpBtn.Draw(spriteBatch);
                 ScrollDownBtn.Draw(spriteBatch);
             }
+            // Only draw this if it exists and is necessary based on the content.
             if (ScrollThumb != null)
             {
-                Color scrollThumb = _style.ScrollThumb;
-                if (ScrollThumb.Hovered || ScrollThumb.Pressed)
-                    scrollThumb = _style.ScrollThumbHover;
-
-                spriteBatch.Draw(_style.Pixel, ScrollThumb.Bounds, scrollThumb);
+                if (_owner.ContentManager.Contents.CalcTotalHeight() > ScrollBar.Height)
+                {
+                    Color scrollThumb = _style.ScrollThumb;
+                    if (ScrollThumb.Hovered || ScrollThumb.Pressed)
+                    {
+                        scrollThumb = _style.ScrollThumbHover;
+                    }
+                    spriteBatch.Draw(_style.Pixel, ScrollThumb.Bounds, scrollThumb);
+                }
             }
         }
         #endregion

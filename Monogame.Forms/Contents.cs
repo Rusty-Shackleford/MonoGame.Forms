@@ -53,19 +53,19 @@ namespace MonoGame.Forms
 
 
         #region [ Queries ]
-        public float TotalHeight()
+        public float CalcTotalHeight()
         {
             return Math.Abs(LowestItem().Bounds.Y - HighestItem().Bounds.Top);
         }
 
-        public float TotalWidth()
+        public float CalcTotalWidth()
         {
             return Math.Abs(RightmostItem().Bounds.Right - LeftmostItem().Bounds.Left);
         }
 
-        public Vector2 TotalSize(Vector2 position)
+        public Vector2 CalcTotalSize(Vector2 position)
         {
-            return new Vector2(TotalWidth(), TotalHeight());
+            return new Vector2(CalcTotalWidth(), CalcTotalHeight());
         }
 
         public IContainable GetItemAtPoint(Point point)

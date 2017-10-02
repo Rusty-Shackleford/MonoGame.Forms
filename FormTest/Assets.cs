@@ -97,7 +97,7 @@ namespace FormTest
 
 
             Font_MineCraftia12 = content.Load<BitmapFont>(@"Fonts/MineCraftia_12");
-
+            Font_MineCraftia10 = content.Load<BitmapFont>(@"Fonts/MineCraftia_10");
             //Font_Crux12 = content.Load<BitmapFont>(@"Fonts/CoderCrux_12");
             //Font_MineCraftia10 = content.Load<BitmapFont>(@"Fonts/MineCraftia_10");
             //Font_SteelFlight8 = content.Load<BitmapFont>(@"Fonts/SteelFlight_8");

@@ -69,15 +69,26 @@ namespace MonoGame.Forms.Controls.Scrollers
         #region [ Update Height ]
         public void UpdateHeight(ScrollBar bar, Contents contents)
         {
-            float virtualHeight = bar.Height;
-            float ratio = virtualHeight / contents.TotalHeight();
-            var height = virtualHeight * ratio;
-            if (height != _height)
+            //var scrollTrackSpace = self.contentHeight - self.viewportHeight; // (600 - 200) = 400 
+            //var scrollThumbSpace = self.viewportHeight - self.thumbHeight; // (200 - 50) = 150
+            //var scrollJump = scrollTrackSpace / scrollThumbSpace; //  (400 / 150 ) = 2.666666666666667
+            float barHeight = bar.Height;
+            float contentHeight = contents.CalcTotalHeight();
+
+            // Bar height == panel height - drag bounds
+            if (contentHeight > barHeight)
             {
-                _height = (int)height;
-                DragAreaOffset = new Rectangle(DragAreaOffset.X, DragAreaOffset.Y, Width, Height);
-                //TODO:  Need to recalculate where we should be based on the new height
+                float ratio = contents.CalcTotalHeight() / barHeight;
+                var height = barHeight * ratio;
+                if (height != _height)
+                {
+                    _height = (int)height;
+                    DragAreaOffset = new Rectangle(DragAreaOffset.X, DragAreaOffset.Y, Width, Height);
+                    //TODO:  Need to recalculate where we should be based on the new height
+                }
             }
+            
+            
         }
         #endregion
 

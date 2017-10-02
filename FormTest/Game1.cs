@@ -71,7 +71,7 @@ namespace FormTest
                 null,
                 Rectangle.Empty
                 );
-            buttonStyle.FontStyle = new FontStyle(Assets.Font_MineCraftia12, Color.White);
+            buttonStyle.FontStyle = new FontStyle(Assets.Font_MineCraftia10, Color.White);
 
 
             // Control Manager - updates / draws all controls
@@ -109,9 +109,13 @@ namespace FormTest
                 new Label("Scroll Down vv", buttonStyle.FontStyle);
             myLabel1.AnchorTo(btn, PositionType.Below_Left, 0, 50, AnchorType.Bounds);
 
+            Label myLabel2 =
+                new Label("Scroll End", buttonStyle.FontStyle);
+            myLabel2.AnchorTo(myLabel1, PositionType.Below_Center, 0, 50, AnchorType.Bounds);
 
             myPanel.ContentManager.Add(btn);
             myPanel.ContentManager.Add(myLabel1);
+            myPanel.ContentManager.Add(myLabel2);
             manager.Add(myPanel);
 
 
