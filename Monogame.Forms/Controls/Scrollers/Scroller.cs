@@ -178,16 +178,18 @@ namespace MonoGame.Forms.Controls.Scrollers
         //TODO: Move to Renderer
         public void Draw(SpriteBatch spriteBatch)
         {
+            // 1. BAR
             if (ScrollBar != null)
             {
                 spriteBatch.Draw(_style.Pixel, ScrollBar.Bounds, _style.ScrollBar);
             }
+            // 2. BUTTONS
             if (HasButtons)
             {
                 ScrollUpBtn.Draw(spriteBatch);
                 ScrollDownBtn.Draw(spriteBatch);
             }
-            // Only draw this if it exists and is necessary based on the content.
+            // 3. THUMB: Only draw this if it exists and is necessary based on the content.
             if (ScrollThumb != null)
             {
                 if (_owner.ContentManager.Contents.CalcTotalHeight() > ScrollBar.Height)

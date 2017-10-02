@@ -5,13 +5,13 @@ fileVersion=1
 fontName=Minecraftia
 fontFile=
 charSet=0
-fontSize=10
+fontSize=11
 aa=1
 scaleH=100
 useSmoothing=0
 isBold=0
 isItalic=0
-useUnicode=1
+useUnicode=0
 disableBoxChars=1
 outputInvalidCharGlyph=0
 dontIncludeKerningPairs=0
@@ -22,8 +22,8 @@ useClearType=1
 # character alignment
 paddingDown=0
 paddingUp=0
-paddingRight=0
-paddingLeft=0
+paddingRight=2
+paddingLeft=2
 spacingHoriz=2
 spacingVert=2
 useFixedHeight=1
@@ -47,9 +47,9 @@ invG=0
 invB=0
 
 # outline
-outlineThickness=1
+outlineThickness=0
 
 # selected chars
-chars=32-126,169,172,174-175
+chars=32-126,169
 
 # imported icon images

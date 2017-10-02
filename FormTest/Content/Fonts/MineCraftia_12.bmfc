@@ -6,7 +6,7 @@ fontName=Minecraftia
 fontFile=
 charSet=0
 fontSize=12
-aa=2
+aa=1
 scaleH=100
 useSmoothing=0
 isBold=0
@@ -16,7 +16,7 @@ disableBoxChars=1
 outputInvalidCharGlyph=0
 dontIncludeKerningPairs=0
 useHinting=1
-renderFromOutline=0
+renderFromOutline=1
 useClearType=1
 
 # character alignment
@@ -24,10 +24,10 @@ paddingDown=0
 paddingUp=0
 paddingRight=0
 paddingLeft=0
-spacingHoriz=1
-spacingVert=1
-useFixedHeight=0
-forceZero=0
+spacingHoriz=2
+spacingVert=2
+useFixedHeight=1
+forceZero=1
 
 # output file
 outWidth=256

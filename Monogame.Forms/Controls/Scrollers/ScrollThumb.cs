@@ -72,14 +72,15 @@ namespace MonoGame.Forms.Controls.Scrollers
             //var scrollTrackSpace = self.contentHeight - self.viewportHeight; // (600 - 200) = 400 
             //var scrollThumbSpace = self.viewportHeight - self.thumbHeight; // (200 - 50) = 150
             //var scrollJump = scrollTrackSpace / scrollThumbSpace; //  (400 / 150 ) = 2.666666666666667
-            float barHeight = bar.Height;
+            float viewportHeight = bar.Height;
             float contentHeight = contents.CalcTotalHeight();
 
+            float pct = viewportHeight / contentHeight;
+
             // Bar height == panel height - drag bounds
-            if (contentHeight > barHeight)
+            if (pct < (float)0.98)
             {
-                float ratio = contents.CalcTotalHeight() / barHeight;
-                var height = barHeight * ratio;
+                var height = Math.Floor(bar.Height * pct);
                 if (height != _height)
                 {
                     _height = (int)height;

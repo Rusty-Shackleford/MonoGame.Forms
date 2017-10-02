@@ -74,6 +74,24 @@ namespace MonoGame.Forms.Controls
             ContentManager.ContentArea.Position = new Vector2(Position.X + offsetX, Position.Y + offsetY);
         }
 
+        public event EventHandler OnLoad;
+        public event EventHandler OnClose;
+        public event EventHandler OnHide;
+        public event EventHandler OnShow;
+
+        // Close Window Options
+        private bool _canClose;
+        public bool CanClose
+        {
+            get { return _canClose; }
+            set
+            {
+                if (value == true)
+                {
+                    // check the style to ensure a close button was set.
+                }
+            }
+        }
 
         public bool Scrolls { get; set; }
         public ContentManager ContentManager { get; protected set; }

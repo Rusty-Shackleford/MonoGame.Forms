@@ -47,6 +47,7 @@ namespace FormTest
 
 
         #region [ Fonts ]
+        public static BitmapFont Font_MineCraftia11 { get; private set; } // appears to be the correct one
         public static BitmapFont Font_Crux12 { get; private set; }
         public static BitmapFont Font_MineCraftia12 { get; private set; }
         public static BitmapFont Font_MineCraftia10 { get; private set; }
@@ -98,6 +99,7 @@ namespace FormTest
 
             Font_MineCraftia12 = content.Load<BitmapFont>(@"Fonts/MineCraftia_12");
             Font_MineCraftia10 = content.Load<BitmapFont>(@"Fonts/MineCraftia_10");
+            Font_MineCraftia11 = content.Load<BitmapFont>(@"Fonts/MineCraftia_11");
             //Font_Crux12 = content.Load<BitmapFont>(@"Fonts/CoderCrux_12");
             //Font_MineCraftia10 = content.Load<BitmapFont>(@"Fonts/MineCraftia_10");
             //Font_SteelFlight8 = content.Load<BitmapFont>(@"Fonts/SteelFlight_8");
