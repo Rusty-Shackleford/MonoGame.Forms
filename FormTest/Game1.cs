@@ -86,15 +86,16 @@ namespace FormTest
 
 
             // Panel:
-            ControlStyle panelStyle = new ControlStyle(Assets.Terminal_Bg);
+            ControlStyle panelStyle = new ControlStyle(Assets.Panel_Bg);
             panelStyle.FontStyle = buttonStyle.FontStyle;
             panelStyle.ScrollerStyle = Assets.ScrollerStyle;
 
 
             myPanel = new Panel("Test Window", panelStyle, true, true);
+            // HACKY HACK HACK - hard coding for simplicity right now
             myPanel.MoveTo(new Vector2(200, 350));
-            myPanel.DragAreaOffset = new Rectangle(0, 0, myPanel.Width, 23);
-            myPanel.SetContentArea(10, 20, myPanel.Width - 10, myPanel.Height - 20);
+            myPanel.DragAreaOffset = new Rectangle(5, 1, 488, 25);
+            myPanel.SetContentArea(40, 40, 422, 617);
 
 
             // Button:
