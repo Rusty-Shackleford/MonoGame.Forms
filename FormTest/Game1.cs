@@ -73,7 +73,7 @@ namespace FormTest
                 );
             buttonStyle.FontStyle = new FontStyle(Assets.Font_MineCraftia11, Color.White);
 
-
+            
             // Control Manager - updates / draws all controls
             WindowContentManager = new ContentManager(
                 GraphicsDevice,
@@ -95,13 +95,13 @@ namespace FormTest
             // HACKY HACK HACK - hard coding for simplicity right now
             myPanel.MoveTo(new Vector2(200, 350));
             myPanel.DragAreaOffset = new Rectangle(5, 1, 488, 25);
-            myPanel.SetContentArea(40, 40, 422, 617);
+            myPanel.SetContentArea(40, 37, 417, 445);
 
 
             // Button:
             Button btn = new Button("Click Me", buttonStyle);
             btn.OnClicked += btn_click;
-            btn.AnchorTo(myPanel, PositionType.Inside_Top_Left, 10, 30, AnchorType.Bounds);
+            btn.AnchorTo(myPanel, PositionType.Inside_Top_Left, 40, 50, AnchorType.Bounds);
 
             // Label:  will re-use the same FontStyle as buttons
             Label myLabel1 =
