@@ -101,7 +101,7 @@ namespace FormTest
             // Button:
             Button btn = new Button("Click Me", buttonStyle);
             btn.OnClicked += btn_click;
-            btn.AnchorTo(myPanel, PositionType.Inside_Top_Left, 40, 50, AnchorType.Bounds);
+            btn.AnchorTo(myPanel, PositionType.Inside_Top_Left, 40, 75, AnchorType.Bounds);
 
             // Label:  will re-use the same FontStyle as buttons
             Label myLabel1 =
