@@ -33,7 +33,7 @@ namespace MonoGame.Forms.Controls.Scrollers
             ScrollBar = new ScrollBar();
             ScrollBar.Width = _style.ScrollBarWidth;
             ScrollBar.Height = _owner.Bounds.Height - _owner.DragBounds.Height;
-            ScrollBar.AnchorTo(_owner, PositionType.Inside_Top_Right, 0, _owner.DragBounds.Height, AnchorType.Bounds);
+            ScrollBar.AnchorTo(_owner, PositionType.Inside_Top_Right, -8, 27, AnchorType.Bounds);
 
             if (_style.ScrollUpButtonStyle != null && _style.ScrollDownButtonStyle != null)
             {

@@ -39,7 +39,7 @@ namespace MonoGame.Forms.Controls
             if (!string.IsNullOrEmpty(title))
             {
                 label = new Label(title, Style.FontStyle);
-                label.AnchorTo(this, PositionType.Inside_Top_Left, 3, 8, Anchoring.AnchorType.Bounds);
+                label.AnchorTo(this, PositionType.Inside_Top_Center, 0, 6, AnchorType.Bounds);
             }
 
             render = new ControlRenderer(this);

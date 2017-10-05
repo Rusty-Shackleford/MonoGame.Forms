@@ -4,7 +4,7 @@ using MonoGame.Extended.Input.InputListeners;
 using MonoGame.Forms.Anchoring;
 using MonoGame.Forms.Controls.Styles;
 using System;
-using System.ComponentModel;
+
 
 namespace MonoGame.Forms.Controls
 {
@@ -25,12 +25,12 @@ namespace MonoGame.Forms.Controls
             get { return _anchor; }
         }
 
-
         public void AnchorTo(IAnchorable target, PositionType style, int offsetX = 0, int offsetY = 0, AnchorType anchorType = AnchorType.Bounds)
         {
             RemoveAnchor();
             _anchor = new AnchorComponent(target, this, anchorType, style, new MonoGame.Extended.Size2(offsetX, offsetY));
         }
+
         public void RemoveAnchor()
         {
             if (_anchor != null)
